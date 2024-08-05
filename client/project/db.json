@@ -5,11 +5,74 @@
       "password": "$2a$10$vJqal096SlEkqz5qJCWyP.6a5fn/dkZhsY.hrY6rpzxa4y7aM/WIC",
       "firstName": "Admin",
       "lastName": "Adminov",
-      "purchasedWorkoutPrograms": [
-      ],
+      "purchasedWorkoutPrograms": [],
       "coach": {},
       "isAdmin": true,
       "id": 1
+    },
+    {
+      "email": "pesho@abv.bg",
+      "password": "$2a$10$qQZFN8OVV0JWqidqJ3UfT.ufYc8APgoisIsqsmSptkfFdbxEUWvdO",
+      "firstName": "Pesho",
+      "lastName": "",
+      "purchasedWorkoutPrograms": [
+        {
+          "id": 1,
+          "price": 89.99,
+          "name": "Ripped in 90 days",
+          "description": "This program will help you get ripped! Get leaner, lose fat and build muscle at the same time! You will be unrecognizable in only 90 days!",
+          "reviews": [
+            "I saw amazing results on the 2nd week!",
+            "One month in and I've lost 25 pounds.",
+            "My waist became so thin that my jeans started falling."
+          ],
+          "details": "Work out for three days, rest one. On Monday - Chest & Back. On Tuesday - Legs, Shoulders & Abs. On Wednesday - Bi's & Tri's. Rest for a day and repeat! Rest for 60-75s between sets.",
+          "customers": []
+        },
+        {
+          "id": 2,
+          "price": 69.99,
+          "name": "Bulk like Hulk",
+          "description": "This program will make you a monster! Build pounds of lean muscle in no time!",
+          "reviews": [
+            "I saw amazing results on the 1st day...",
+            "One month in and I've gained 10 pounds of muscle.",
+            "My biceps have grown 2 inches during the first two months!!!"
+          ],
+          "details": "Work out for two days, rest one. Then work out for 2 days and rest two. On Monday - Upper Body. On Tuesday - Lower Body & Abs. Rest for a day and repeat then rest for two days to finish the week! Rest for 60-90s between sets.",
+          "customers": []
+        },
+        {
+          "id": 3,
+          "price": 34.99,
+          "name": "Yoga Flow",
+          "description": "This program will help you feel better and in harmony with inner self by intense stretches, yoga and meditation!",
+          "reviews": [
+            "I feel so relieved. Stress is no longer an issue.",
+            "Just two month in and I can almost do a full split! I couldn't even touch my own toes before!"
+          ],
+          "details": "Do some stretches for beginners, which you can find on YouTube... Do them every day or every other day. Don't push yourself very hard if it is too painful.",
+          "customers": []
+        }
+      ],
+      "coach": {
+        "id": 1,
+        "firstName": "Dwayne",
+        "lastName": "Johnson",
+        "description": "Do you smell what The Rock is cooking? You heard me, pal! No introduction needed. You better be ready to feel the pain if you decide to hire me as your personal coach! I am not coming to terms with your bullshit excuses! You wanna look like a real fkin man? Hit the button and let's get started!",
+        "price": 999.99,
+        "reviews": [
+          "My testosterone levels literally double just as I am speaking to him... Online!!!",
+          "This man will make you go through HELL, but it is damn worth it!",
+          "There is nothing to say really... You can't expect anything less than amazing results with such a man as your coach! What a proffessional!",
+          "The Rock man... The one and only. Pure inspiration!"
+        ],
+        "clients": [
+          2
+        ]
+      },
+      "isAdmin": false,
+      "id": 2
     }
   ],
   "workout-programs": [
@@ -24,7 +87,9 @@
         "My waist became so thin that my jeans started falling."
       ],
       "details": "Work out for three days, rest one. On Monday - Chest & Back. On Tuesday - Legs, Shoulders & Abs. On Wednesday - Bi's & Tri's. Rest for a day and repeat! Rest for 60-75s between sets.",
-      "customers": []
+      "customers": [
+        2
+      ]
     },
     {
       "id": 2,
@@ -38,6 +103,7 @@
       ],
       "details": "Work out for two days, rest one. Then work out for 2 days and rest two. On Monday - Upper Body. On Tuesday - Lower Body & Abs. Rest for a day and repeat then rest for two days to finish the week! Rest for 60-90s between sets.",
       "customers": [
+        2
       ]
     },
     {
@@ -51,6 +117,7 @@
       ],
       "details": "Do some stretches for beginners, which you can find on YouTube... Do them every day or every other day. Don't push yourself very hard if it is too painful.",
       "customers": [
+        2
       ]
     }
   ],
@@ -67,7 +134,10 @@
         "There is nothing to say really... You can't expect anything less than amazing results with such a man as your coach! What a proffessional!",
         "The Rock man... The one and only. Pure inspiration!"
       ],
-      "clients": []
+      "clients": [
+        2,
+        2
+      ]
     },
     {
       "id": 2,
