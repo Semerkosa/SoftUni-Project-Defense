@@ -1,0 +1,47 @@
+<main>
+    <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()">
+        <h2>Login Form</h2>
+
+        <p *ngIf="errorMessage" class="error">{{errorMessage}}</p>
+
+        <div class="form-input">
+            <label for="email">Email</label>
+            <input type="text" id="email" [class.input-error]="shouldShowErrorForControl('email')"
+                formControlName="email">
+        </div>
+
+        <ng-container *ngIf="loginFormGroup.controls['email'].touched && loginFormGroup.controls['email'].invalid">
+            <p *ngIf="loginFormGroup.controls['email'].errors?.['required']" class="error">
+                Email is required!
+            </p>
+
+            <p *ngIf="loginFormGroup.controls['email'].errors?.['email']" class="error">
+                Email format is invalid!
+            </p>
+        </ng-container>
+
+        <div class="form-input">
+            <label for="password">Password</label>
+            <input type="password" id="password" [class.input-error]="shouldShowErrorForControl('password')"
+                formControlName="password">
+        </div>
+
+        <ng-container
+            *ngIf="loginFormGroup.controls['password'].touched && loginFormGroup.controls['password'].invalid">
+            <p *ngIf="loginFormGroup.controls['password'].errors?.['required']" class="error">
+                Password is required!
+            </p>
+
+            <p *ngIf="loginFormGroup.controls['password'].errors?.['password']" class="error">
+                The password must have a length of at least 8 characters, an uppercase letter, a lowercase letter and a
+                number.
+            </p>
+        </ng-container>
+
+        <button [class.disabled-btn]="loginFormGroup.invalid" [disabled]="loginFormGroup.invalid">Login</button>
+
+        <p class="bottom_p">
+            New to Gimy? <a routerLink="/register">Register</a>
+        </p>
+    </form>
+</main>

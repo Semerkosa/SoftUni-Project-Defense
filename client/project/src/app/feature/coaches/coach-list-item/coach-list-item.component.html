@@ -1,0 +1,8 @@
+<h3>{{ coach.firstName }} {{ coach.lastName }}</h3>
+<p>{{ coach.description }}</p>
+<a [routerLink]="['/coaches', coach.id]">Learn More</a>
+<div class="price-info">
+    <p><strong>{{ coach.price }}$/month</strong></p>
+    <button *ngIf="canHire" class="btn hire" (click)="hireCoach(coach)">Hire</button>
+    <button *ngIf="!canHire" class="btn cancel" (click)="cancelCoach(coach)">Cancel Membership</button>
+</div>

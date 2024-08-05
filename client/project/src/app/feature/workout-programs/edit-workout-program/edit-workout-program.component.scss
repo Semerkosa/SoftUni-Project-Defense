@@ -1,0 +1,15 @@
+main {
+  min-width: 500px;
+
+  form {
+    h2 {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .error-msg {
+      max-width: unset;
+      font-size: 1.1rem;
+    }
+  }
+}

@@ -1,0 +1,31 @@
+main {
+
+    p {
+        max-width: 480px;
+    }
+
+    h1 {
+        margin-bottom: 2rem;
+    }
+
+    h2 {
+        margin-bottom: 1.5rem;
+    }
+}
+
+.buttons {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+
+    button {
+        background-color: lightgreen;
+        font-size: 1.25rem;
+    }
+
+    span {
+        font-size: 1.5rem;
+    }
+}

@@ -1,0 +1,59 @@
+<form [formGroup]="createProgramFormGroup" (ngSubmit)="createProgram()">
+    <h2>Create Workout Program</h2>
+
+    <p *ngIf="errorMessage" class="error error-msg">{{ errorMessage }}</p>
+
+    <div class="form-input">
+        <label for="name">Name</label>
+        <input type="text" id="name" [class.input-error]="shouldShowErrorForControl('name')"
+            formControlName="name">
+    </div>
+
+    <ng-container *ngIf="shouldShowErrorForControl('name')">
+        <p *ngIf="createProgramFormGroup.controls['name'].errors?.['required']" class="error">
+            Program name is required!
+        </p>
+    </ng-container>
+
+    <div class="form-input">        
+        <label for="price">Price</label>
+        <input type="number" id="price" [class.input-error]="shouldShowErrorForControl('price')"
+            formControlName="price">
+    </div>
+
+    <ng-container *ngIf="shouldShowErrorForControl('price')">
+        <p *ngIf="createProgramFormGroup.controls['price'].errors?.['required']" class="error">
+            Program price is required!
+        </p>
+
+        <p *ngIf="createProgramFormGroup.controls['price'].errors?.['min']" class="error">
+            Min program price is 1
+        </p>
+    </ng-container>
+
+    <div class="form-input">
+        <label for="description">Description</label>
+        <input type="text" id="description" [class.input-error]="shouldShowErrorForControl('description')"
+            formControlName="description">
+    </div>
+
+    <ng-container *ngIf="shouldShowErrorForControl('description')">
+        <p *ngIf="createProgramFormGroup.controls['description'].errors?.['required']" class="error">
+            Program description is required!
+        </p>
+    </ng-container>
+
+    <div class="form-input">
+        <label for="details">Details</label>
+        <input type="text" id="details" [class.input-error]="shouldShowErrorForControl('details')"
+            formControlName="details">
+    </div>
+
+    <ng-container *ngIf="shouldShowErrorForControl('details')">
+        <p *ngIf="createProgramFormGroup.controls['details'].errors?.['required']" class="error">
+            Program details are required!
+        </p>
+    </ng-container>
+
+    <button [class.disabled-btn]="createProgramFormGroup.invalid" [disabled]="createProgramFormGroup.invalid">Create</button>
+</form>

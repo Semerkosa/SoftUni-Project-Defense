@@ -1,0 +1,30 @@
+main {
+    position: relative;
+}
+
+.loader {
+    text-align: center;
+}
+
+.programs {
+    h1 {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        padding: 0;
+    }
+}
+
+.btn.create {
+    position: absolute;
+    top: 1.75rem;
+    right: 3rem;
+    background: blue;
+    color: white;
+}

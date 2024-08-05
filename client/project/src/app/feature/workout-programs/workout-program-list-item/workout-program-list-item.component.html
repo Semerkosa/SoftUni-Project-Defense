@@ -1,0 +1,26 @@
+<h3>Program: {{ program.name }}</h3>
+<p>{{ program.description }}</p>
+<a [routerLink]="['/workout-programs', program.id]">Learn More</a>
+<div class="price-info">
+    <p>Costs only <strong>{{ program.price }}$</strong></p>
+    <button class="btn" [disabled]="!canPurchase" (click)="purchaseProgram($event, program)">
+        {{ canPurchase ? "Buy" : "Owned" }}</button>
+</div>
+
+<ng-container *ngIf="isAdmin">
+    <div class="admin-panel">
+        <h3>* Admin panel *</h3>
+        <p *ngIf="program.customers.length > 0; else noCustomers" class="customers">Count of customers who have purchased this program: {{
+            program.customers.length }}</p>
+
+        <ng-template #noCustomers>
+            <p class="no-customers">No customers have purchased this.</p>
+        </ng-template>
+
+        <div class="buttons">
+            <button class="btn edit" (click)="editProgram()">Edit</button>
+            <button class="btn delete" (click)="deleteProgram()">Delete</button>
+        </div>
+
+    </div>
+</ng-container>

@@ -1,0 +1,29 @@
+<main *ngIf="isLoaded; else loading">
+
+    <a routerLink="/coaches">Go back</a>
+
+    <div *ngIf="!!coach; else noCoach" class="coaches">
+        <h1>{{ coach.firstName }} {{ coach.lastName }}</h1>
+
+        <div class="program-info">
+            <p>{{ coach.description }}</p>
+            <h3>Satisfied clients' reviews:</h3>
+            <p *ngFor="let review of coach.reviews">
+                - "{{ review }}"
+            </p>
+
+            <!-- <div class="price-info">
+                <span><strong>{{ coach.price }}$/month</strong></span>
+                <button class="btn">Hire</button>
+            </div> -->
+        </div>
+    </div>
+
+    <ng-template #noCoach>
+        <h2>No such coach!</h2>
+    </ng-template>
+</main>
+
+<ng-template #loading>
+    <h2 class="loader">Loading...</h2>
+</ng-template>

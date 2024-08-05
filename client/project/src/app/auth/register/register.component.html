@@ -1,0 +1,71 @@
+<main>
+    <form [formGroup]="registerFormGroup" (ngSubmit)="onSubmit()">
+        <h2>Register Form</h2>
+
+        <p *ngIf="errorMessage" class="error">{{errorMessage}}</p>
+
+        <div class="form-input">
+            <label for="email">Email</label>
+            <input [class.input-error]="shouldShowErrorForControl('email')" type="email" id="email"
+                formControlName="email">
+        </div>
+
+        <ng-container
+            *ngIf="registerFormGroup.controls['email'].touched && registerFormGroup.controls['email'].invalid">
+            <p *ngIf="registerFormGroup.controls['email'].errors?.['required']" class="error">
+                Email is required!
+            </p>
+
+            <p *ngIf="registerFormGroup.controls['email'].errors?.['email']" class="error">
+                Email format is invalid!
+            </p>
+        </ng-container>
+
+        <div class="form-input">
+            <label for="firstName">First Name</label>
+            <input [class.input-error]="shouldShowErrorForControl('firstName')" type="text" id="firstName"
+                formControlName="firstName">
+        </div>
+
+        <ng-container
+            *ngIf="registerFormGroup.controls['firstName'].touched && registerFormGroup.controls['firstName'].invalid">
+            <p *ngIf="registerFormGroup.controls['firstName'].errors?.['required']" class="error">
+                First Name is required!
+            </p>
+
+            <p *ngIf="registerFormGroup.controls['firstName'].errors?.['minlength']" class="error">
+                The name length must be at least 2 characters.
+            </p>
+        </ng-container>
+
+        <div class="form-input">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" formControlName="lastName">
+        </div>
+
+        <div class="form-input">
+            <label for="password">Password</label>
+            <input [class.input-error]="shouldShowErrorForControl('password')" type="password" id="password"
+                formControlName="password">
+        </div>
+
+        <ng-container
+            *ngIf="registerFormGroup.controls['password'].touched && registerFormGroup.controls['password'].invalid">
+            <p *ngIf="registerFormGroup.controls['password'].errors?.['required']" class="error">
+                Password is required!
+            </p>
+
+            <p *ngIf="registerFormGroup.controls['password'].errors?.['password']" class="error">
+                The password must have a length of at least 8 characters, an uppercase letter, a lowercase letter and a number.
+            </p>
+        </ng-container>
+
+        <button [class.disabled-btn]="registerFormGroup.invalid" [disabled]="registerFormGroup.invalid">
+            Create Account
+        </button>
+
+        <p class="bottom_p">
+            Have an account? <a routerLink="/login">Log In</a>
+        </p>
+    </form>
+</main>

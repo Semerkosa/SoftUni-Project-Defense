@@ -1,0 +1,29 @@
+<main *ngIf="isLoaded; else loading">
+
+    <a routerLink="/workout-programs">Go back</a>
+
+    <div *ngIf="!!workoutProgram; else noProgram" class="programs">
+        <h1>{{ workoutProgram.name }}</h1>
+
+        <div class="program-info">
+            <p>{{ workoutProgram.description }}</p>
+            <h3>Satisfied customers' reviews:</h3>
+            <p *ngFor="let review of workoutProgram.reviews">
+                - "{{ review }}"
+            </p>
+
+            <!-- <div class="price-info">
+                <span>Costs only <strong>{{ workoutProgram.price }}$</strong></span>
+                <button class="btn">Buy</button>
+            </div> -->
+        </div>
+    </div>
+
+    <ng-template #noProgram>
+        <h2>No such workout program!</h2>
+    </ng-template>
+</main>
+
+<ng-template #loading>
+    <h2 class="loader">Loading...</h2>
+</ng-template>

@@ -1,0 +1,21 @@
+<main *ngIf="isLoaded; else loading">
+
+    <div *ngIf="workoutPrograms; else noPrograms" class="programs">
+        <h1>Different lifestyle - different program!</h1>
+        <button *ngIf="isAdmin" class="btn create" (click)="toggleCreateForm()">Create</button>
+
+        <app-add-workout-program *ngIf="shouldShowCreateForm" (onProgramCreate)="addWorkoutProgramToList($event)"></app-add-workout-program>
+
+        <ul>
+            <app-workout-program-list-item *ngFor="let program of workoutPrograms" [program]="program" (onProgramDelete)="removeWorkoutProgramFromList($event)"></app-workout-program-list-item>
+        </ul>
+    </div>
+
+    <ng-template #noPrograms>
+        <h2>No programs available at the moment.</h2>
+    </ng-template>
+</main>
+
+<ng-template #loading>
+    <h2 class="loader">Loading...</h2>
+</ng-template>
