@@ -15,4 +15,9 @@ public abstract class BaseEntity {
     public String getId() {
         return id;
     }
+
+    public BaseEntity setId(String id) {
+        this.id = id;
+        return this;
+    }
 }

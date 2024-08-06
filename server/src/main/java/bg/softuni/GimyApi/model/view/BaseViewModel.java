@@ -7,4 +7,9 @@ public abstract class BaseViewModel {
     public String getId() {
         return id;
     }
+
+    public BaseViewModel setId(String id) {
+        this.id = id;
+        return this;
+    }
 }
