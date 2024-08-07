@@ -7,6 +7,8 @@ public class UserServiceModel {
     private String lastName;
     private String password;
 
+    public UserServiceModel() {}
+
     public UserServiceModel(String email, String firstName, String password) {
         this.email = email;
         this.firstName = firstName;

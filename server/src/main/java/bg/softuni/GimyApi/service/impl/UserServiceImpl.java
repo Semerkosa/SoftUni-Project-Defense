@@ -26,10 +26,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserViewModel registerUser(UserServiceModel userServiceModel) {
-        System.out.println(userServiceModel);
         UserEntity user = modelMapper.map(userServiceModel, UserEntity.class);
-        System.out.println(user);
 
-        return modelMapper.map(userRepository.saveAndFlush(user), UserViewModel.class);
+        user = userRepository.saveAndFlush(user);
+        System.out.println("Saved user - " + user);
+
+        return modelMapper.map(user, UserViewModel.class);
     }
 }

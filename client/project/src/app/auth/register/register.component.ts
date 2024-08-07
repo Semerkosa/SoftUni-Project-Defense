@@ -51,9 +51,9 @@ export class RegisterComponent implements OnInit {
 			firstName: firstName,
 			lastName: lastName,
 			password: password,
-			purchasedWorkoutPrograms: [],
-			coach: {},
-			isAdmin: false
+			// purchasedWorkoutPrograms: [],
+			// coach: {},
+			// isAdmin: false
 		};
 
 		// this.userService.register$(body)
@@ -86,14 +86,14 @@ export class RegisterComponent implements OnInit {
 				console.log('Registered user response:');
 				console.log(response);
 
-				localStorage.setItem('id', response.user.id);
-				localStorage.setItem('token', response.accessToken);
-				localStorage.setItem('isAdmin', response.user.isAdmin);
+				localStorage.setItem('id', response.id);
+				// localStorage.setItem('token', response.accessToken);
+				localStorage.setItem('isAdmin', "false");
 
-				if (response.user.lastName) {
-					localStorage.setItem('fullName', `${response.user.firstName} ${response.user.lastName}`);
+				if (response.lastName) {
+					localStorage.setItem('fullName', `${response.firstName} ${response.lastName}`);
 				} else {
-					localStorage.setItem('fullName', response.user.firstName);
+					localStorage.setItem('fullName', response.firstName);
 				}
 
 				this.userService.updateLoginStatus(true);
@@ -104,7 +104,7 @@ export class RegisterComponent implements OnInit {
 				console.log('Registration stream completed')
 			},
 			error: (httpError) => {
-				console.log(httpError);
+				console.log("HTTP Error: ", httpError);
 				this.errorMessage = httpError.error + "!";
 
 				this.registerFormGroup.setValue({

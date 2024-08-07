@@ -6,7 +6,7 @@ export interface ICreateUserDto {
     firstName: string;
     password: string;
     lastName?: string;
-    purchasedWorkoutPrograms: IWorkoutProgram[] | [];
-    coach: ICoach | {};
-    isAdmin: boolean;
+    // purchasedWorkoutPrograms: IWorkoutProgram[] | [];
+    // coach: ICoach | {};
+    // isAdmin: boolean;
 }

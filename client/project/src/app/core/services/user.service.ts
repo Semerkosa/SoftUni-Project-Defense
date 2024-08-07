@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ICoach, ICreateUserDto, ILoginUserDto, IUser, IWorkoutProgram } from '../interfaces';
 
-const serverUrl = `${environment.apiUrl}/users`
+const serverUrl = `${environment.apiUrl}/user`;
 
 @Injectable({
 	providedIn: 'root'
@@ -20,7 +20,7 @@ export class UserService {
 	}
 
 	isLoggedIn(): boolean {
-		return !!localStorage.getItem("token"); // to retrieve boolean
+		return !!localStorage.getItem("id"); // to retrieve boolean
 	}
 
 	isAdmin(): boolean {
@@ -67,7 +67,7 @@ export class UserService {
 	}
 
 	register$(user: ICreateUserDto): Observable<any> {
-		const url = `${environment.apiUrl}/register`;
+		const url = `${serverUrl}/register`;
 		return this.http.post<ICreateUserDto>(url, user, environment.httpOptions);
 	}
 
