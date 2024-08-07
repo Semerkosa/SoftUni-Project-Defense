@@ -1,14 +1,14 @@
 package bg.softuni.GimyApi.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class UserEntity extends BaseEntity {
+public class UserEntity extends BaseEntity implements UserDetails {
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -24,6 +24,12 @@ public class UserEntity extends BaseEntity {
     @Column(nullable = false, name = "date_time", updatable = false, insertable = false, columnDefinition = "datetime DEFAULT current_timestamp()")
     private LocalDateTime datetime;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_authorities",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_id"))
+    private List<AuthorityEntity> authorities;
+
     public UserEntity() {
 
     }
@@ -37,8 +43,34 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public UserEntity setPassword(String password) {
@@ -81,5 +113,14 @@ public class UserEntity extends BaseEntity {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName +
                 '}';
+    }
+
+    public List<AuthorityEntity> getAuthorities() {
+        return authorities;
+    }
+
+    public UserEntity setAuthorities(List<AuthorityEntity> authorities) {
+        this.authorities = authorities;
+        return this;
     }
 }
