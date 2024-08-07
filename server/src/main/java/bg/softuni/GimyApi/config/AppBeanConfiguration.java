@@ -11,4 +11,5 @@ public class AppBeanConfiguration {
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
+
 }
