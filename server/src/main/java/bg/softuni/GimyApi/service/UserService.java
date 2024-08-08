@@ -11,4 +11,6 @@ public interface UserService {
     UserViewModel registerUser(UserRegisterServiceModel userRegisterServiceModel);
 
     UserViewModel loginUser(UserLoginServiceModel userLoginServiceModel);
+
+    void createAdminUser(String id);
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -111,7 +112,9 @@ public class UserEntity extends BaseEntity implements UserDetails {
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName +
+                ", lastName='" + lastName + '\'' +
+                ", datetime=" + datetime +
+                ", authorities=" + authorities +
                 '}';
     }
 
@@ -119,8 +122,15 @@ public class UserEntity extends BaseEntity implements UserDetails {
         return authorities;
     }
 
-    public UserEntity setAuthorities(List<AuthorityEntity> authorities) {
+    private UserEntity setAuthorities(List<AuthorityEntity> authorities) {
         this.authorities = authorities;
         return this;
+    }
+
+    public void addRole(AuthorityEntity authority) {
+        List<AuthorityEntity> updatedAuthorities = getAuthorities() == null ? new ArrayList<>() : getAuthorities();
+        updatedAuthorities.add(authority);
+
+        this.setAuthorities(updatedAuthorities);
     }
 }

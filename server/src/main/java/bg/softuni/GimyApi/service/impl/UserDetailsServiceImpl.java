@@ -28,12 +28,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                         new UsernameNotFoundException("User not found!")
                 );
 
+        System.out.println("UserEntity loaded: " + user);
+
         List<SimpleGrantedAuthority> authorities = user.getAuthorities()
                 .stream()
                 .map(authority ->
                         new SimpleGrantedAuthority(authority.getAuthority())
                 )
                 .collect(Collectors.toList());
+
+        System.out.println("User loaded authorities: " + authorities);
 
         return new User(user.getUsername(), user.getPassword(), authorities);
     }
