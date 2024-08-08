@@ -1,6 +1,6 @@
 package bg.softuni.GimyApi.init;
 
-import bg.softuni.GimyApi.model.service.UserServiceModel;
+import bg.softuni.GimyApi.model.service.UserRegisterServiceModel;
 import bg.softuni.GimyApi.model.view.UserViewModel;
 import bg.softuni.GimyApi.service.UserService;
 import org.springframework.boot.CommandLineRunner;
@@ -24,7 +24,7 @@ public class InitializeData implements CommandLineRunner {
 
         System.out.println("Creating an admin user...");
 
-        UserServiceModel user = new UserServiceModel("admin@abv.bg", "Pesho", "asd");
+        UserRegisterServiceModel user = new UserRegisterServiceModel("admin@abv.bg", "Pesho", "asd");
 
         UserViewModel userViewModel = userService.registerUser(user);
 

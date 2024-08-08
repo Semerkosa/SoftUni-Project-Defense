@@ -41,15 +41,10 @@ export class LoginComponent implements OnInit {
 			next: response => {
 				console.log("Login response", response);
 
-				localStorage.setItem('id', response.user.id);
-				localStorage.setItem('token', response.accessToken);
-				localStorage.setItem('isAdmin', response.user.isAdmin);
-
-				if (response.user.lastName) {
-					localStorage.setItem('fullName', `${response.user.firstName} ${response.user.lastName}`);
-				} else {
-					localStorage.setItem('fullName', response.user.firstName);
-				}
+				localStorage.setItem('id', response.id);
+				// localStorage.setItem('token', response.accessToken);
+				localStorage.setItem('isAdmin', "false");
+				localStorage.setItem('fullName', response.lastName ? `${response.firstName} ${response.lastName}` : `${response.firstName}`);
 
 				this.userService.updateLoginStatus(true);
 

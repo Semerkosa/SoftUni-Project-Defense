@@ -62,7 +62,7 @@ export class UserService {
 	}
 
 	login$(user: ILoginUserDto): Observable<any> {
-		const url = `${environment.apiUrl}/login`;
+		const url = `${serverUrl}/login`;
 		return this.http.post<ILoginUserDto>(url, user, environment.httpOptions);
 	}
 

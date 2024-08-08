@@ -1,21 +1,21 @@
 package bg.softuni.GimyApi.model.service;
 
-public class UserServiceModel {
+public class UserRegisterServiceModel {
 
     private String email;
     private String firstName;
     private String lastName;
     private String password;
 
-    public UserServiceModel() {}
+    public UserRegisterServiceModel() {}
 
-    public UserServiceModel(String email, String firstName, String password) {
+    public UserRegisterServiceModel(String email, String firstName, String password) {
         this.email = email;
         this.firstName = firstName;
         this.password = password;
     }
 
-    public UserServiceModel(String email, String firstName, String lastName, String password) {
+    public UserRegisterServiceModel(String email, String firstName, String lastName, String password) {
         this(email, firstName, password);
         this.lastName = lastName;
     }
@@ -24,7 +24,7 @@ public class UserServiceModel {
         return email;
     }
 
-    public UserServiceModel setEmail(String email) {
+    public UserRegisterServiceModel setEmail(String email) {
         this.email = email;
         return this;
     }
@@ -33,7 +33,7 @@ public class UserServiceModel {
         return firstName;
     }
 
-    public UserServiceModel setFirstName(String firstName) {
+    public UserRegisterServiceModel setFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
@@ -42,7 +42,7 @@ public class UserServiceModel {
         return lastName;
     }
 
-    public UserServiceModel setLastName(String lastName) {
+    public UserRegisterServiceModel setLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
@@ -51,7 +51,7 @@ public class UserServiceModel {
         return password;
     }
 
-    public UserServiceModel setPassword(String password) {
+    public UserRegisterServiceModel setPassword(String password) {
         this.password = password;
         return this;
     }

@@ -89,13 +89,8 @@ export class RegisterComponent implements OnInit {
 				localStorage.setItem('id', response.id);
 				// localStorage.setItem('token', response.accessToken);
 				localStorage.setItem('isAdmin', "false");
-
-				if (response.lastName) {
-					localStorage.setItem('fullName', `${response.firstName} ${response.lastName}`);
-				} else {
-					localStorage.setItem('fullName', response.firstName);
-				}
-
+				localStorage.setItem('fullName', response.lastName ? `${response.firstName} ${response.lastName}` : `${response.firstName}`);
+				
 				this.userService.updateLoginStatus(true);
 
 				this.router.navigate([`/workout-programs`]);
