@@ -6,7 +6,7 @@ import { EditWorkoutProgramComponent } from "./edit-workout-program/edit-workout
 
 const routes: Routes = [
     {
-        path: 'workout-programs',
+        path: 'workout-programs/all',
         component: WorkoutProgramsListComponent,
     },
     {

@@ -8,7 +8,11 @@ import bg.softuni.GimyApi.model.view.UserViewModel;
 import bg.softuni.GimyApi.repository.AuthorityRepository;
 import bg.softuni.GimyApi.repository.UserRepository;
 import bg.softuni.GimyApi.service.UserService;
+import bg.softuni.GimyApi.util.JwtUtil;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +23,19 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
+
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
+    private final AuthenticationManager authenticationManager;
 
-    public UserServiceImpl(UserRepository userRepository, AuthorityRepository authorityRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, AuthorityRepository authorityRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, JwtUtil jwtUtil, AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.authorityRepository = authorityRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
+        this.authenticationManager = authenticationManager;
     }
 
     @Override
@@ -51,22 +60,41 @@ public class UserServiceImpl implements UserService {
         user = userRepository.saveAndFlush(user);
         System.out.println("Saved user - " + user);
 
+        String token = jwtUtil.generateToken(user);
+        System.out.println("Generated Token: " + token);
+
         return modelMapper.map(user, UserViewModel.class);
     }
 
     @Override
     public UserViewModel loginUser(UserLoginServiceModel userLoginServiceModel) {
+        System.out.println("Authenticating...");
+
+        Authentication authenticate = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        userLoginServiceModel.getEmail(),
+                        userLoginServiceModel.getPassword()
+                )
+        );
+
+        System.out.print("Is auth: ");
+        System.out.println(authenticate.isAuthenticated());
+
         UserEntity user = getUserByEmail(userLoginServiceModel.getEmail());
+        System.out.println("Found user: " + user);
 
         if (user == null) {
             return null;
         }
 
-        boolean isPasswordMatched = passwordEncoder.matches(userLoginServiceModel.getPassword(), user.getPassword());
+        String token = jwtUtil.generateToken(user);
+        System.out.println("Generated Token: " + token);
 
-        if (!isPasswordMatched) {
-            return null; // TODO: Return different message
-        }
+//        boolean isPasswordMatched = passwordEncoder.matches(userLoginServiceModel.getPassword(), user.getPassword());
+//
+//        if (!isPasswordMatched) {
+//            return null; // TODO: Return different message
+//        }
 
         return modelMapper.map(user, UserViewModel.class);
     }

@@ -14,7 +14,7 @@ export class WorkoutProgramService {
   constructor(private http: HttpClient) { }
 
   getWorkoutPrograms$(): Observable<IWorkoutProgram[]> {
-    return this.http.get<IWorkoutProgram[]>(serverUrl);
+    return this.http.get<IWorkoutProgram[]>(`${serverUrl}/all`);
   } 
 
   getWorkoutProgramById$(id: number): Observable<IWorkoutProgram> {

@@ -37,7 +37,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 )
                 .collect(Collectors.toList());
 
-        System.out.println("User loaded authorities: " + authorities);
+        System.out.println("UserEntity loaded authorities: " + authorities);
 
         return new User(user.getUsername(), user.getPassword(), authorities);
     }

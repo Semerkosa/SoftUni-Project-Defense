@@ -48,14 +48,14 @@ export class LoginComponent implements OnInit {
 
 				this.userService.updateLoginStatus(true);
 
-				this.router.navigate(['/workout-programs']);
+				this.router.navigate(['/workout-programs/all']);
 			},
 			complete: () => {
 				console.log('Login stream completed')
 			},
 			error: (err) => {
 				console.log(err);
-				this.errorMessage = err.error + "!";
+				this.errorMessage = "Invalid email or password.";
 				this.loginFormGroup.setValue({
 					email: email,
 					password: ""

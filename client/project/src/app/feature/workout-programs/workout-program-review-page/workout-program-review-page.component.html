@@ -1,6 +1,6 @@
 <main *ngIf="isLoaded; else loading">
 
-    <a routerLink="/workout-programs">Go back</a>
+    <a routerLink="/workout-programs/all">Go back</a>
 
     <div *ngIf="!!workoutProgram; else noProgram" class="programs">
         <h1>{{ workoutProgram.name }}</h1>

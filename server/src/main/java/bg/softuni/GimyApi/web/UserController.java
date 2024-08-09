@@ -3,6 +3,7 @@ package bg.softuni.GimyApi.web;
 import bg.softuni.GimyApi.model.service.UserLoginServiceModel;
 import bg.softuni.GimyApi.model.service.UserRegisterServiceModel;
 import bg.softuni.GimyApi.model.view.CustomMessageViewModel;
+import bg.softuni.GimyApi.model.view.ErrorViewModel;
 import bg.softuni.GimyApi.model.view.UserViewModel;
 import bg.softuni.GimyApi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class UserController {
 
         if (userViewModel == null) {
             // TODO: Handle better
-            return new ResponseEntity<>(new CustomMessageViewModel("Email exists!"), HttpStatus.OK);
+            return new ResponseEntity<>(new ErrorViewModel("Email exists!"), HttpStatus.OK);
         }
 
         System.out.println("Successful registration (" + userViewModel.getId() + ")");
@@ -45,7 +46,7 @@ public class UserController {
 
         if (userViewModel == null) {
             // TODO: Handle better
-            return new ResponseEntity<>(new CustomMessageViewModel("Invalid email or password!"), HttpStatus.OK);
+            return new ResponseEntity<>(new ErrorViewModel("Invalid email or password!"), HttpStatus.OK);
         }
 
         System.out.println("Successful login (" + userViewModel.getId() + ")");

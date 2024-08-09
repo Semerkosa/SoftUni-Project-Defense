@@ -1,9 +1,6 @@
 package bg.softuni.GimyApi.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;
@@ -42,5 +39,12 @@ public class AuthorityEntity extends BaseEntity implements GrantedAuthority {
     public AuthorityEntity setUsers(List<UserEntity> users) {
         this.users = users;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "AuthorityEntity{" +
+                "authority='" + authority + '\'' +
+                '}';
     }
 }

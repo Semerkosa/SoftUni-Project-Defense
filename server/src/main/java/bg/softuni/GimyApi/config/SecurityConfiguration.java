@@ -1,6 +1,7 @@
 package bg.softuni.GimyApi.config;
 
 import bg.softuni.GimyApi.filter.JwtAuthenticationFilter;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -28,7 +29,7 @@ public class SecurityConfiguration {
     private static final String[] WHITE_LIST_URL = {
             "/user/login",
             "/user/register",
-            "/workout-programs",
+            "/workout-programs/all",
             "/",
     };
 
@@ -49,6 +50,12 @@ public class SecurityConfiguration {
                         .authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
+                // Overrides the default "FORBIDDEN" response:
+                .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer.
+                        authenticationEntryPoint((request, response, exception) ->
+                                response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
+                                        exception.getMessage()))
+                )
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 

@@ -73,7 +73,7 @@ export class EditWorkoutProgramComponent implements OnInit {
             next: editedProgram => {
                 console.log("Edited program", editedProgram);
 
-                this.router.navigate(['/workout-programs']);
+                this.router.navigate(['/workout-programs/all']);
             }, 
             error: err => {
                 console.log(err);

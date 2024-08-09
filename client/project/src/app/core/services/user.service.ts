@@ -29,7 +29,7 @@ export class UserService {
 
 	getUserFullName(): string {
 		const fullName = localStorage.getItem("fullName");
-		console.log("userService called for name ", localStorage.getItem("fullName"));
+		// console.log("userService called for name ", localStorage.getItem("fullName"));
 
 		return fullName ? fullName : "";
 	}
