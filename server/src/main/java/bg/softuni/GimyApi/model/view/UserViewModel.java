@@ -2,10 +2,20 @@ package bg.softuni.GimyApi.model.view;
 
 public class UserViewModel extends BaseViewModel {
 
+    private String token;
     private String firstName;
     private String lastName;
 
     public UserViewModel() {
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public UserViewModel setToken(String token) {
+        this.token = token;
+        return this;
     }
 
     public String getFirstName() {
@@ -29,7 +39,7 @@ public class UserViewModel extends BaseViewModel {
     @Override
     public String toString() {
         return "UserViewModel{" +
-                "id='" + super.getId() + '\'' +
+                "token='" + token + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 '}';

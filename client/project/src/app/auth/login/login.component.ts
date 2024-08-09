@@ -30,20 +30,19 @@ export class LoginComponent implements OnInit {
 		const { email, password } = this.loginFormGroup.value;
 
 		const body = {
-			email: email,
-			password: password
+			email,
+			password
 		}
 
 		console.log("login body", body);
-
 
 		this.userService.login$(body).subscribe({
 			next: response => {
 				console.log("Login response", response);
 
-				localStorage.setItem('id', response.id);
-				// localStorage.setItem('token', response.accessToken);
-				localStorage.setItem('isAdmin', "false");
+				// localStorage.setItem('id', response.id);
+				localStorage.setItem('token', response.token);
+				// localStorage.setItem('isAdmin', "false");
 				localStorage.setItem('fullName', response.lastName ? `${response.firstName} ${response.lastName}` : `${response.firstName}`);
 
 				this.userService.updateLoginStatus(true);

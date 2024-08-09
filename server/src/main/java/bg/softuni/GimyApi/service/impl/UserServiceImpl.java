@@ -60,25 +60,17 @@ public class UserServiceImpl implements UserService {
         user = userRepository.saveAndFlush(user);
         System.out.println("Saved user - " + user);
 
-        String token = jwtUtil.generateToken(user);
-        System.out.println("Generated Token: " + token);
-
         return modelMapper.map(user, UserViewModel.class);
     }
 
     @Override
     public UserViewModel loginUser(UserLoginServiceModel userLoginServiceModel) {
-        System.out.println("Authenticating...");
-
-        Authentication authenticate = authenticationManager.authenticate(
+        authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         userLoginServiceModel.getEmail(),
                         userLoginServiceModel.getPassword()
                 )
         );
-
-        System.out.print("Is auth: ");
-        System.out.println(authenticate.isAuthenticated());
 
         UserEntity user = getUserByEmail(userLoginServiceModel.getEmail());
         System.out.println("Found user: " + user);
@@ -96,7 +88,10 @@ public class UserServiceImpl implements UserService {
 //            return null; // TODO: Return different message
 //        }
 
-        return modelMapper.map(user, UserViewModel.class);
+        UserViewModel viewModel = modelMapper.map(user, UserViewModel.class);
+        viewModel.setToken(token);
+
+        return viewModel;
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
