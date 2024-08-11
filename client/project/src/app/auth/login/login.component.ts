@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
 				const isAdmin = authorities.includes("ADMIN");
 				console.log("Is Admin? - ", isAdmin);
 
+				localStorage.setItem('id', response.id);
 				localStorage.setItem('token', response.token);
 				localStorage.setItem('isAdmin', isAdmin);
 				localStorage.setItem('fullName', response.lastName ? `${response.firstName} ${response.lastName}` : `${response.firstName}`);
