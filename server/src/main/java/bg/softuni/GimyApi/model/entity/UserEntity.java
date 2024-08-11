@@ -31,6 +31,12 @@ public class UserEntity extends BaseEntity implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private List<AuthorityEntity> authorities;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_workout_programs",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "workout_program_id"))
+    private List<WorkoutProgramEntity> workoutPrograms;
+
     public UserEntity() {
 
     }
@@ -132,5 +138,13 @@ public class UserEntity extends BaseEntity implements UserDetails {
         updatedAuthorities.add(authority);
 
         this.setAuthorities(updatedAuthorities);
+    }
+
+    public List<WorkoutProgramEntity> getWorkoutPrograms() {
+        return workoutPrograms;
+    }
+
+    public void setWorkoutPrograms(List<WorkoutProgramEntity> workoutPrograms) {
+        this.workoutPrograms = workoutPrograms;
     }
 }
