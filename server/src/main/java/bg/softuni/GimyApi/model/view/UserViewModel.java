@@ -1,10 +1,13 @@
 package bg.softuni.GimyApi.model.view;
 
+import java.util.List;
+
 public class UserViewModel extends BaseViewModel {
 
     private String token;
     private String firstName;
     private String lastName;
+    private List<String> authorities;
 
     public UserViewModel() {
     }
@@ -36,12 +39,21 @@ public class UserViewModel extends BaseViewModel {
         return this;
     }
 
+    public List<String> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<String> authorities) {
+        this.authorities = authorities;
+    }
+
     @Override
     public String toString() {
         return "UserViewModel{" +
                 "token='" + token + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", authorities=" + authorities +
                 '}';
     }
 }

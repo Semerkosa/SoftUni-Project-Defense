@@ -40,11 +40,16 @@ export class LoginComponent implements OnInit {
 			next: response => {
 				console.log("Login response", response);
 
-				// localStorage.setItem('id', response.id);
-				localStorage.setItem('token', response.token);
-				// localStorage.setItem('isAdmin', "false");
-				localStorage.setItem('fullName', response.lastName ? `${response.firstName} ${response.lastName}` : `${response.firstName}`);
+				const authorities = response.authorities;
+				console.log("Auth", authorities);
 
+				const isAdmin = authorities.includes("ADMIN");
+				console.log("Is Admin? - ", isAdmin);
+
+				localStorage.setItem('token', response.token);
+				localStorage.setItem('isAdmin', isAdmin);
+				localStorage.setItem('fullName', response.lastName ? `${response.firstName} ${response.lastName}` : `${response.firstName}`);
+				
 				this.userService.updateLoginStatus(true);
 
 				this.router.navigate(['/workout-programs/all']);
@@ -56,7 +61,7 @@ export class LoginComponent implements OnInit {
 				console.log(err);
 				this.errorMessage = "Invalid email or password.";
 				this.loginFormGroup.setValue({
-					email: email,
+					email,
 					password: ""
 				});
 				this.loginFormGroup.markAsUntouched();

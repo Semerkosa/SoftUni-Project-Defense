@@ -1,5 +1,7 @@
 package bg.softuni.GimyApi.model.service;
 
+import org.hibernate.mapping.TableOwner;
+
 public class UserLoginServiceModel {
 
     private String email;
@@ -25,5 +27,13 @@ public class UserLoginServiceModel {
     public UserLoginServiceModel setPassword(String password) {
         this.password = password;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "UserLoginServiceModel{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

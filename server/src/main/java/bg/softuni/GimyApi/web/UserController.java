@@ -30,12 +30,12 @@ public class UserController {
 
         if (userViewModel == null) {
             // TODO: Handle better
-            return new ResponseEntity<>(new ErrorViewModel("Email exists!"), HttpStatus.OK);
+            return ResponseEntity.ok(new ErrorViewModel("Email exists!"));
         }
 
         System.out.println("Successful registration (" + userViewModel.getId() + ")");
 
-        return new ResponseEntity<>(userViewModel, HttpStatus.OK);
+        return ResponseEntity.ok(userViewModel);
     }
 
     @PostMapping("/login")
@@ -46,11 +46,11 @@ public class UserController {
 
         if (userViewModel == null) {
             // TODO: Handle better
-            return new ResponseEntity<>(new ErrorViewModel("Invalid email or password!"), HttpStatus.OK);
+            return ResponseEntity.ok(new ErrorViewModel("Invalid email or password!"));
         }
 
-        System.out.println("Successful login (" + userViewModel.getId() + ")");
+        System.out.println("Successful login");
 
-        return new ResponseEntity<>(userViewModel, HttpStatus.OK);
+        return ResponseEntity.ok(userViewModel);
     }
 }

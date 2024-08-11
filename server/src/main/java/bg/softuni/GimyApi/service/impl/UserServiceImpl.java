@@ -13,10 +13,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -65,6 +67,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserViewModel loginUser(UserLoginServiceModel userLoginServiceModel) {
+        System.out.println("Authenticating user - " + userLoginServiceModel);
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         userLoginServiceModel.getEmail(),
@@ -72,24 +76,22 @@ public class UserServiceImpl implements UserService {
                 )
         );
 
-        UserEntity user = getUserByEmail(userLoginServiceModel.getEmail());
-        System.out.println("Found user: " + user);
+        System.out.println("Authenticated!");
 
-        if (user == null) {
-            return null;
-        }
+        // We need the user's full name
+        UserEntity user = getUserByEmail(userLoginServiceModel.getEmail());
+
+        List<String> authorities = user.getAuthorities()
+                .stream()
+                .map(AuthorityEntity::getAuthority)
+                .toList();
 
         String token = jwtUtil.generateToken(user);
         System.out.println("Generated Token: " + token);
 
-//        boolean isPasswordMatched = passwordEncoder.matches(userLoginServiceModel.getPassword(), user.getPassword());
-//
-//        if (!isPasswordMatched) {
-//            return null; // TODO: Return different message
-//        }
-
         UserViewModel viewModel = modelMapper.map(user, UserViewModel.class);
         viewModel.setToken(token);
+        viewModel.setAuthorities(authorities);
 
         return viewModel;
     }
