@@ -22,12 +22,12 @@ export class WorkoutProgramListItemComponent implements OnChanges {
         private router: Router) { }
 
     @Input() program: IWorkoutProgram;
-    @Output() onProgramDelete = new EventEmitter<number>();
+    @Output() onProgramDelete = new EventEmitter<string>();
 
     ngOnChanges(): void {
         this.isAdmin = this.userService.isAdmin();
 
-        const userId = +this.userService.getUserId();
+        const userId = this.userService.getUserId();
 
         if (userId) {
             this.canPurchase = !this.program.customers.includes(userId); // if id is included - we return false
@@ -43,7 +43,7 @@ export class WorkoutProgramListItemComponent implements OnChanges {
 
         const btn = event.target as HTMLElement;
         const programId = program.id;
-        const userId = +this.userService.getUserId(); // cast the id to number
+        const userId = this.userService.getUserId();
 
         this.userService.getUserById$(userId).subscribe({
             next: user => {

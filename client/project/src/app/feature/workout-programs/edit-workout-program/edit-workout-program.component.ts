@@ -13,7 +13,7 @@ export class EditWorkoutProgramComponent implements OnInit {
 
     errorMessage = "";
 
-    programId: number;
+    programId: string;
     name: string;
     price: number;
     description: string;

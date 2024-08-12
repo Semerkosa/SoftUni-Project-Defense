@@ -21,7 +21,7 @@ export class WorkoutProgramsUserListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.subscription = this.userService.getUserById$(+this.userService.getUserId()).subscribe({
+        this.subscription = this.userService.getUserById$(this.userService.getUserId()).subscribe({
             next: userResponse => {
                 this.isLoaded = true;
                 console.log("userById", userResponse);

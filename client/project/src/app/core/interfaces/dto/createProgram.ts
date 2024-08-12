@@ -4,5 +4,5 @@ export interface ICreateProgram {
     description: string;
     details: string;
     reviews: string[] | [];
-    customers: number[] | [];
+    customers: string[] | [];
 }

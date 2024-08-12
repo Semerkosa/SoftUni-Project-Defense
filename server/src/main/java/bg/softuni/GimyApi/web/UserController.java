@@ -33,7 +33,7 @@ public class UserController {
             return ResponseEntity.ok(new ErrorViewModel("Email exists!"));
         }
 
-        System.out.println("Successful registration (" + userViewModel.getId() + ")");
+        System.out.println("Successful registration (" + userViewModel + ")");
 
         return ResponseEntity.ok(userViewModel);
     }

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ICreateProgram, IEditProgram, IWorkoutProgram } from '../interfaces';
+import { UserService } from './user.service';
 
 const serverUrl = `${environment.apiUrl}/workout-programs`;
 
@@ -11,33 +12,33 @@ const serverUrl = `${environment.apiUrl}/workout-programs`;
 })
 export class WorkoutProgramService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private userService: UserService) { }
 
   getWorkoutPrograms$(): Observable<IWorkoutProgram[]> {
     return this.http.get<IWorkoutProgram[]>(`${serverUrl}/all`);
   } 
 
-  getWorkoutProgramById$(id: number): Observable<IWorkoutProgram> {
+  getWorkoutProgramById$(id: string): Observable<IWorkoutProgram> {
     return this.http.get<IWorkoutProgram>(`${serverUrl}/${id}`)
   }
 
-  editUsersForGivenWorkoutProgram$(workoutProgramId: number, userIds: number[]): Observable<IWorkoutProgram> {
+  editUsersForGivenWorkoutProgram$(workoutProgramId: string, userIds: string[]): Observable<IWorkoutProgram> {
 		const body = {
 			"customers": userIds ? userIds : []
 		}
     
-		return this.http.patch<IWorkoutProgram>(`${serverUrl}/${workoutProgramId}`, body, environment.httpOptions);
+		return this.http.patch<IWorkoutProgram>(`${serverUrl}/${workoutProgramId}`, body, this.userService.getUpdatedHttpOptions());
 	}
 
   createWorkoutProgram$(program: ICreateProgram): Observable<IWorkoutProgram> {
-    return this.http.post<IWorkoutProgram>(`${serverUrl}`, program, environment.httpOptions);
+    return this.http.post<IWorkoutProgram>(`${serverUrl}`, program, this.userService.getUpdatedHttpOptions());
   }
 
-  deleteWorkoutProgramById$(programId: number): Observable<any> {
+  deleteWorkoutProgramById$(programId: string): Observable<any> {
     return this.http.delete<any>(`${serverUrl}/${programId}`);
   }
 
-  editWorkoutProgramById$(programId: number, program: IEditProgram): Observable<IWorkoutProgram> {
-    return this.http.patch<IWorkoutProgram>(`${serverUrl}/${programId}`, program, environment.httpOptions);
+  editWorkoutProgramById$(programId: string, program: IEditProgram): Observable<IWorkoutProgram> {
+    return this.http.patch<IWorkoutProgram>(`${serverUrl}/${programId}`, program, this.userService.getUpdatedHttpOptions());
   }
 }

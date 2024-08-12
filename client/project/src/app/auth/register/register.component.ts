@@ -83,8 +83,7 @@ export class RegisterComponent implements OnInit {
 
         this.userService.register$(body).subscribe({
             next: response => {
-                console.log('Registered user response:');
-                console.log(response);
+                console.log('Registered user response:', response);
 
                 // localStorage.setItem('id', response.id);
                 // // localStorage.setItem('token', response.accessToken);

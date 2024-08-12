@@ -1,9 +1,9 @@
 export interface IWorkoutProgram {
-    id: number;
+    id: string;
     name: string;
     price: number; // one-time purchase
     description: string;
     reviews: string[];
     details: string;
-    customers: number[]; // userIds
+    customers: string[]; // userIds
 }

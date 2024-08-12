@@ -19,7 +19,7 @@ export class CoachListItemComponent implements OnInit {
         private userService: UserService) { }
 
     ngOnInit(): void {
-        const userId = +this.userService.getUserId();
+        const userId = this.userService.getUserId();
 
         this.canHire = !this.coach.clients.includes(userId); // if the user is within the clients of the coach, we can't hire him again
     }
@@ -27,7 +27,7 @@ export class CoachListItemComponent implements OnInit {
     hireCoach(coach: ICoach) {
         console.log("Coach to be hired", coach);
 
-        const userId = +this.userService.getUserId();
+        const userId = this.userService.getUserId();
 
         this.userService.getUserById$(userId).subscribe({
             next: userResponse => {
@@ -76,7 +76,7 @@ export class CoachListItemComponent implements OnInit {
     cancelCoach(coach: ICoach) {
         console.log("Coach to be cancelled", coach);
 
-        const userId = +this.userService.getUserId();
+        const userId = this.userService.getUserId();
         const coachId = coach.id;
 
         this.userService.editCoachForGivenUser$(userId).subscribe({

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -34,6 +34,13 @@ export class UserService {
 		return fullName ? fullName : "";
 	}
 
+	getJwtToken(): string {
+		const token = localStorage.getItem("token");
+		console.log("JWT Token ", token);
+
+		return token ? token : "";
+	}
+
 	getUserId(): string {
 		const userId = localStorage.getItem("id");
 		console.log("userService called for user id ", userId);
@@ -41,34 +48,34 @@ export class UserService {
 		return userId ? userId : "";
 	}
 
-	getUserById$(id: number): Observable<IUser> {
+	getUserById$(id: string): Observable<IUser> {
 		return this.http.get<IUser>(`${serverUrl}/${id}`);
 	}
 
-	editWorkoutProgramsForGivenUser$(userId: number, programs: IWorkoutProgram[]): Observable<IUser> {
+	editWorkoutProgramsForGivenUser$(userId: string, programs: IWorkoutProgram[]): Observable<IUser> {
 		const body = {
 			"purchasedWorkoutPrograms": programs
 		}
 
-		return this.http.patch<IUser>(`${serverUrl}/${userId}`, body, environment.httpOptions);
+		return this.http.patch<IUser>(`${serverUrl}/${userId}`, body, this.getUpdatedHttpOptions());
 	}
 
-	editCoachForGivenUser$(userId: number, coach?: ICoach): Observable<ICoach> {
+	editCoachForGivenUser$(userId: string, coach?: ICoach): Observable<ICoach> {
 		const body = {
 			"coach": coach? coach : {} // Will unset the coach if it wasn't passed as a parameter
 		}
 
-		return this.http.patch<ICoach>(`${serverUrl}/${userId}`, body, environment.httpOptions);
+		return this.http.patch<ICoach>(`${serverUrl}/${userId}`, body, this.getUpdatedHttpOptions());
 	}
 
 	login$(user: ILoginUserDto): Observable<any> {
 		const url = `${serverUrl}/login`;
-		return this.http.post<ILoginUserDto>(url, user, environment.httpOptions);
+		return this.http.post<ILoginUserDto>(url, user, this.getUpdatedHttpOptions());
 	}
 
 	register$(user: ICreateUserDto): Observable<any> {
 		const url = `${serverUrl}/register`;
-		return this.http.post<ICreateUserDto>(url, user, environment.httpOptions);
+		return this.http.post<ICreateUserDto>(url, user, this.getUpdatedHttpOptions());
 	}
 
 	logout(): void {
@@ -78,5 +85,23 @@ export class UserService {
 		localStorage.removeItem("isAdmin");
 
 		this.updateLoginStatus(false);
+	}
+
+	getUpdatedHttpOptions() {
+		const token = this.getJwtToken();
+
+		let httpOptions = {
+			headers: new HttpHeaders({
+				"Content-Type": "application/json"
+			})
+		};
+
+		if (token) {
+			httpOptions.headers.set("Authorization", `Bearer ${token}`);
+		}
+
+		console.log("HTTP options: ", httpOptions);
+
+		return httpOptions;		
 	}
 }
