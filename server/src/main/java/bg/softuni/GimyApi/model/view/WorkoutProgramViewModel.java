@@ -70,6 +70,13 @@ public class WorkoutProgramViewModel extends BaseViewModel {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "WorkoutProgramViewModel{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", details='" + details + '\'' +
+                ", reviews=" + reviews +
+                ", customers=" + customers +
+                '}';
     }
 }

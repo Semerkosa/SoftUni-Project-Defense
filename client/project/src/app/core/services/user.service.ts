@@ -97,7 +97,7 @@ export class UserService {
 		};
 
 		if (token) {
-			httpOptions.headers.set("Authorization", `Bearer ${token}`);
+			httpOptions.headers = httpOptions.headers.set("Authorization", `Bearer ${token}`);
 		}
 
 		console.log("HTTP options: ", httpOptions);

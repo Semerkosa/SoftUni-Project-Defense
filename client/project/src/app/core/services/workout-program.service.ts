@@ -19,7 +19,7 @@ export class WorkoutProgramService {
   } 
 
   getWorkoutProgramById$(id: string): Observable<IWorkoutProgram> {
-    return this.http.get<IWorkoutProgram>(`${serverUrl}/${id}`)
+    return this.http.get<IWorkoutProgram>(`${serverUrl}/${id}`, this.userService.getUpdatedHttpOptions())
   }
 
   editUsersForGivenWorkoutProgram$(workoutProgramId: string, userIds: string[]): Observable<IWorkoutProgram> {

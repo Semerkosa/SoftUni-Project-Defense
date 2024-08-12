@@ -31,13 +31,11 @@ export class AddWorkoutProgramComponent implements OnInit {
 
     const { name, price, description, details } = this.createProgramFormGroup.value;
 
-    const program: ICreateProgram = { // TODO: This is better to be handled on the service by adding the missing/default properties
+    const program: ICreateProgram = {
       name: name,
       price: price,
       description: description,
-      details: details,
-      reviews: ["This program helped me achive amazing results in less than 3 weeks!"], // default review
-      customers: []
+      details: details
     }
 
     this.workoutProgramService.createWorkoutProgram$(program).subscribe({

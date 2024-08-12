@@ -12,4 +12,6 @@ public interface WorkoutProgramService {
     boolean addReview(String workoutProgramId, String review);
 
     List<WorkoutProgramViewModel> getAllWorkoutPrograms();
+
+    WorkoutProgramViewModel getWorkoutProgramById(String workoutProgramId);
 }

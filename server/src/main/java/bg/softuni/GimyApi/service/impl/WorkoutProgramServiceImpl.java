@@ -87,4 +87,33 @@ public class WorkoutProgramServiceImpl implements WorkoutProgramService {
         return viewModels;
     }
 
+    @Override
+    public WorkoutProgramViewModel getWorkoutProgramById(String workoutProgramId) {
+        Optional<WorkoutProgramEntity> optionalWorkoutProgram = workoutProgramRepository.findById(workoutProgramId);
+
+        if (optionalWorkoutProgram.isEmpty()) {
+            return null;
+        }
+
+        WorkoutProgramEntity workoutProgram = optionalWorkoutProgram.get();
+
+        WorkoutProgramViewModel viewModel = modelMapper.map(workoutProgram, WorkoutProgramViewModel.class);
+
+        List<String> usersPurchasedTheProgram = workoutProgram.getUsers()
+                .stream()
+                .map(UserEntity::getId)
+                .toList();
+
+        viewModel.setCustomers(usersPurchasedTheProgram);
+
+        List<String> reviews = workoutProgram.getWorkoutProgramReviews()
+                .stream()
+                .map(WorkoutProgramReviewEntity::getReview)
+                .toList();
+
+        viewModel.setReviews(reviews);
+
+        return viewModel;
+    }
+
 }
