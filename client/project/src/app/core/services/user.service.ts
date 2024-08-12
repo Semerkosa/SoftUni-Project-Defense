@@ -49,7 +49,7 @@ export class UserService {
 	}
 
 	getUserById$(id: string): Observable<IUser> {
-		return this.http.get<IUser>(`${serverUrl}/${id}`);
+		return this.http.get<IUser>(`${serverUrl}/${id}`, this.getUpdatedHttpOptions());
 	}
 
 	editWorkoutProgramsForGivenUser$(userId: string, programs: IWorkoutProgram[]): Observable<IUser> {

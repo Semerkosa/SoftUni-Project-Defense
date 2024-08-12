@@ -2,7 +2,7 @@ package bg.softuni.GimyApi.init;
 
 import bg.softuni.GimyApi.model.service.UserRegisterServiceModel;
 import bg.softuni.GimyApi.model.service.WorkoutProgramServiceModel;
-import bg.softuni.GimyApi.model.view.UserViewModel;
+import bg.softuni.GimyApi.model.view.UserLoginViewModel;
 import bg.softuni.GimyApi.service.AuthorityService;
 import bg.softuni.GimyApi.service.UserService;
 import bg.softuni.GimyApi.service.WorkoutProgramService;
@@ -37,8 +37,8 @@ public class InitializeData implements CommandLineRunner {
 
         UserRegisterServiceModel adminUser = new UserRegisterServiceModel("admin@abv.bg", "Admin", "Adminov", "Admin123");
 
-        UserViewModel userViewModel = userService.registerUser(adminUser);
-        userService.createAdminUser(userViewModel.getId());
+        UserLoginViewModel userLoginViewModel = userService.registerUser(adminUser);
+        userService.createAdminUser(userLoginViewModel.getId());
 
         System.out.println("Adding workout programs...");
 

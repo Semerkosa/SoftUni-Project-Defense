@@ -31,7 +31,7 @@ export class WorkoutProgramService {
 	}
 
   createWorkoutProgram$(program: ICreateProgram): Observable<IWorkoutProgram> {
-    return this.http.post<IWorkoutProgram>(`${serverUrl}`, program, this.userService.getUpdatedHttpOptions());
+    return this.http.post<IWorkoutProgram>(`${serverUrl}/create`, program, this.userService.getUpdatedHttpOptions());
   }
 
   deleteWorkoutProgramById$(programId: string): Observable<any> {

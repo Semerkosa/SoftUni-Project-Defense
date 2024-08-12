@@ -1,13 +1,11 @@
 package bg.softuni.GimyApi.web;
 
+import bg.softuni.GimyApi.model.service.WorkoutProgramServiceModel;
 import bg.softuni.GimyApi.model.view.WorkoutProgramViewModel;
 import bg.softuni.GimyApi.service.WorkoutProgramService;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -38,4 +36,11 @@ public class WorkoutProgramController {
         return ResponseEntity.ok(Objects.requireNonNullElse(workoutProgram, "No such workout program."));
     }
 
+    @PostMapping("/create")
+    public ResponseEntity<?> createWorkoutProgram(@RequestBody WorkoutProgramServiceModel workoutProgramServiceModel) {
+        WorkoutProgramViewModel workoutProgram = workoutProgramService.createWorkoutProgram(workoutProgramServiceModel);
+        System.out.println("Program created!");
+
+        return ResponseEntity.ok(workoutProgram);
+    }
 }

@@ -56,7 +56,7 @@ export class AddWorkoutProgramComponent implements OnInit {
       },
       error: err => {
         console.log(err);
-        this.workoutProgramService = err;
+        this.errorMessage = err;
       }
     });
   }

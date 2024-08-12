@@ -37,6 +37,9 @@ public class UserEntity extends BaseEntity implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "workout_program_id"))
     private List<WorkoutProgramEntity> workoutPrograms;
 
+    @ManyToOne
+    private CoachEntity coach;
+
     public UserEntity() {
 
     }
@@ -146,5 +149,14 @@ public class UserEntity extends BaseEntity implements UserDetails {
 
     public void setWorkoutPrograms(List<WorkoutProgramEntity> workoutPrograms) {
         this.workoutPrograms = workoutPrograms;
+    }
+
+    public CoachEntity getCoach() {
+        return coach;
+    }
+
+    public UserEntity setCoach(CoachEntity coach) {
+        this.coach = coach;
+        return this;
     }
 }

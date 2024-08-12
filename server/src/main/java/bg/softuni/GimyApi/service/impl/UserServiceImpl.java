@@ -4,7 +4,7 @@ import bg.softuni.GimyApi.model.entity.AuthorityEntity;
 import bg.softuni.GimyApi.model.entity.UserEntity;
 import bg.softuni.GimyApi.model.service.UserLoginServiceModel;
 import bg.softuni.GimyApi.model.service.UserRegisterServiceModel;
-import bg.softuni.GimyApi.model.view.UserViewModel;
+import bg.softuni.GimyApi.model.view.UserLoginViewModel;
 import bg.softuni.GimyApi.repository.AuthorityRepository;
 import bg.softuni.GimyApi.repository.UserRepository;
 import bg.softuni.GimyApi.service.UserService;
@@ -12,13 +12,10 @@ import bg.softuni.GimyApi.util.JwtUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -46,7 +43,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserViewModel registerUser(UserRegisterServiceModel userRegisterServiceModel) {
+    public UserLoginViewModel registerUser(UserRegisterServiceModel userRegisterServiceModel) {
         if (userExists(userRegisterServiceModel.getEmail())) {
             return null;
         }
@@ -62,11 +59,11 @@ public class UserServiceImpl implements UserService {
         user = userRepository.saveAndFlush(user);
         System.out.println("Saved user - " + user);
 
-        return modelMapper.map(user, UserViewModel.class);
+        return modelMapper.map(user, UserLoginViewModel.class);
     }
 
     @Override
-    public UserViewModel loginUser(UserLoginServiceModel userLoginServiceModel) {
+    public UserLoginViewModel loginUser(UserLoginServiceModel userLoginServiceModel) {
         System.out.println("Authenticating user - " + userLoginServiceModel);
 
         authenticationManager.authenticate(
@@ -89,7 +86,7 @@ public class UserServiceImpl implements UserService {
         String token = jwtUtil.generateToken(user);
         System.out.println("Generated Token: " + token);
 
-        UserViewModel viewModel = modelMapper.map(user, UserViewModel.class);
+        UserLoginViewModel viewModel = modelMapper.map(user, UserLoginViewModel.class);
         viewModel.setToken(token);
         viewModel.setAuthorities(authorities);
 
