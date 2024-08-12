@@ -7,7 +7,9 @@ import bg.softuni.GimyApi.model.service.WorkoutProgramServiceModel;
 import bg.softuni.GimyApi.model.view.WorkoutProgramViewModel;
 import bg.softuni.GimyApi.repository.WorkoutProgramRepository;
 import bg.softuni.GimyApi.repository.WorkoutProgramReviewRepository;
+import bg.softuni.GimyApi.service.UserService;
 import bg.softuni.GimyApi.service.WorkoutProgramService;
+import bg.softuni.GimyApi.util.JwtUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +23,16 @@ public class WorkoutProgramServiceImpl implements WorkoutProgramService {
     private final WorkoutProgramRepository workoutProgramRepository;
     private final WorkoutProgramReviewRepository workoutProgramReviewRepository;
 
+    private final UserService userService;
     private final ModelMapper modelMapper;
+    private final JwtUtil jwtUtil;
 
-    public WorkoutProgramServiceImpl(WorkoutProgramRepository workoutProgramRepository, WorkoutProgramReviewRepository workoutProgramReviewRepository, ModelMapper modelMapper) {
+    public WorkoutProgramServiceImpl(WorkoutProgramRepository workoutProgramRepository, WorkoutProgramReviewRepository workoutProgramReviewRepository, UserService userService, ModelMapper modelMapper, JwtUtil jwtUtil) {
         this.workoutProgramRepository = workoutProgramRepository;
         this.workoutProgramReviewRepository = workoutProgramReviewRepository;
+        this.userService = userService;
         this.modelMapper = modelMapper;
+        this.jwtUtil = jwtUtil;
     }
 
     @Override
@@ -113,6 +119,12 @@ public class WorkoutProgramServiceImpl implements WorkoutProgramService {
         viewModel.setReviews(reviews);
 
         return viewModel;
+    }
+
+    @Override
+    public boolean isUserAdmin(String jwtToken) {
+        String email = jwtUtil.extractEmail(jwtToken);
+        return userService.isAdmin(email);
     }
 
 }

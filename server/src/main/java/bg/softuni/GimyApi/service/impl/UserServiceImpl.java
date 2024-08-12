@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -104,6 +105,22 @@ public class UserServiceImpl implements UserService {
         adminUser.addRole(adminAuthority);
 
         userRepository.saveAndFlush(adminUser);
+    }
+
+    @Override
+    public boolean isAdmin(String email) {
+        Optional<UserEntity> optionalUser = userRepository.findByEmail(email);
+
+        if (optionalUser.isEmpty()) {
+            return false;
+        }
+
+        UserEntity user = optionalUser.get();
+        List<AuthorityEntity> userAuthorities = user.getAuthorities();
+
+        AuthorityEntity adminAuthority = authorityRepository.findByAuthority("ADMIN");
+
+        return userAuthorities.contains(adminAuthority);
     }
 
     private UserEntity getUserByEmail(String email) {

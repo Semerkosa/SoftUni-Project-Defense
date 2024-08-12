@@ -3,6 +3,8 @@ package bg.softuni.GimyApi.web;
 import bg.softuni.GimyApi.model.service.WorkoutProgramServiceModel;
 import bg.softuni.GimyApi.model.view.WorkoutProgramViewModel;
 import bg.softuni.GimyApi.service.WorkoutProgramService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +38,15 @@ public class WorkoutProgramController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createWorkoutProgram(@RequestBody WorkoutProgramServiceModel workoutProgramServiceModel) {
+    public ResponseEntity<?> createWorkoutProgram(@RequestBody WorkoutProgramServiceModel workoutProgramServiceModel,
+                                                  @RequestHeader(name = "Authorization") String jwtToken) {
+        String token = jwtToken.split("\\s+")[1];
+        boolean isAdmin = workoutProgramService.isUserAdmin(token);
+
+        if (!isAdmin) {
+            return new ResponseEntity<>("You don't have access to perform the action!", HttpStatus.UNAUTHORIZED);
+        }
+
         WorkoutProgramViewModel workoutProgram = workoutProgramService.createWorkoutProgram(workoutProgramServiceModel);
         System.out.println("Program created!");
 

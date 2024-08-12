@@ -13,4 +13,6 @@ public interface UserService {
     UserLoginViewModel loginUser(UserLoginServiceModel userLoginServiceModel);
 
     void createAdminUser(String id);
+
+    boolean isAdmin(String email);
 }

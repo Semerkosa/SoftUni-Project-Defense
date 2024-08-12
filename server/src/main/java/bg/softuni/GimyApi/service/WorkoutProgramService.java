@@ -14,4 +14,6 @@ public interface WorkoutProgramService {
     List<WorkoutProgramViewModel> getAllWorkoutPrograms();
 
     WorkoutProgramViewModel getWorkoutProgramById(String workoutProgramId);
+
+    boolean isUserAdmin(String jwtToken);
 }

@@ -19,7 +19,7 @@ export class CoachService {
   }
 
   getCoachById$(id: string): Observable<ICoach> {
-    return this.http.get<ICoach>(`${serverUrl}/${id}`);
+    return this.http.get<ICoach>(`${serverUrl}/${id}`, this.userService.getUpdatedHttpOptions());
   }
 
   editUsersForGivenCoach(coachId: string, userIds: string[]): Observable<ICoach> {
