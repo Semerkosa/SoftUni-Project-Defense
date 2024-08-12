@@ -15,7 +15,7 @@ export class CoachService {
   constructor(private http: HttpClient, private userService: UserService) { }
 
   getCoaches$(): Observable<ICoach[]> {
-    return this.http.get<ICoach[]>(`${serverUrl}/all`);
+    return this.http.get<ICoach[]>(`${serverUrl}/all`, this.userService.getUpdatedHttpOptions());
   }
 
   getCoachById$(id: string): Observable<ICoach> {

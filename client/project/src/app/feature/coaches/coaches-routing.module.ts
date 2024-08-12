@@ -4,7 +4,7 @@ import { CoachReviewPageComponent } from './coach-review-page/coach-review-page.
 
 const routes: Routes = [
 	{
-		path: 'coaches',
+		path: 'coaches/all',
 		component: CoachListComponent
 	},
 	{

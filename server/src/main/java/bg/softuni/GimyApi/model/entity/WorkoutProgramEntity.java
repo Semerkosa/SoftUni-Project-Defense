@@ -15,10 +15,10 @@ public class WorkoutProgramEntity extends BaseEntity {
     @Column(nullable = false)
     private double price;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String details;
 
     @ManyToMany(mappedBy = "workoutPrograms")

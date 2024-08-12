@@ -49,9 +49,8 @@ public class WorkoutProgramServiceImpl implements WorkoutProgramService {
         reviewEntity.setWorkoutProgram(workoutProgram.get());
         workoutProgramReviewRepository.saveAndFlush(reviewEntity);
 
-//        workoutProgram.addReview(reviewEntity);
-//
-//        workoutProgramRepository.saveAndFlush(workoutProgram);
+//        workoutProgram.get().addReview(reviewEntity);
+//        workoutProgramRepository.saveAndFlush(workoutProgram.get());
 
 //        System.out.println(workoutProgram.getWorkoutProgramReviews());
 //        System.out.println(workoutProgramRepository.findById(workoutProgramId).get().getWorkoutProgramReviews());

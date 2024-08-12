@@ -16,13 +16,13 @@ public class CoachEntity extends BaseEntity {
     @Column(nullable = false)
     private double price;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    @OneToMany(mappedBy = "coach")
+    @OneToMany(mappedBy = "coach", fetch = FetchType.EAGER)
     private List<UserEntity> users;
 
-    @OneToMany(mappedBy = "coach", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "coach", fetch = FetchType.EAGER)
     private List<CoachReviewEntity> coachReviews;
 
     public CoachEntity() {
@@ -80,5 +80,17 @@ public class CoachEntity extends BaseEntity {
     public CoachEntity setCoachReviews(List<CoachReviewEntity> coachReviews) {
         this.coachReviews = coachReviews;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "CoachEntity{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", users=" + users +
+                ", coachReviews=" + coachReviews +
+                '}';
     }
 }

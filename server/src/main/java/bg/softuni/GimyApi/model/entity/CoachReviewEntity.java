@@ -6,7 +6,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "coaches")
+@Table(name = "coach_reviews")
 public class CoachReviewEntity extends BaseEntity {
 
     @Column(nullable = false, columnDefinition = "TEXT")
@@ -16,6 +16,10 @@ public class CoachReviewEntity extends BaseEntity {
     private CoachEntity coach;
 
     public CoachReviewEntity() {
+    }
+
+    public CoachReviewEntity(String review) {
+        this.review = review;
     }
 
     public String getReview() {

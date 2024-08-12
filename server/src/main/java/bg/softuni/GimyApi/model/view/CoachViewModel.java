@@ -67,4 +67,16 @@ public class CoachViewModel extends BaseViewModel {
         this.clients = clients;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "CoachViewModel{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", reviews=" + reviews +
+                ", clients=" + clients +
+                '}';
+    }
 }

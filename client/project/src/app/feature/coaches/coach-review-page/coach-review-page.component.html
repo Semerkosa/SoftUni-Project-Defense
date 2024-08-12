@@ -1,6 +1,6 @@
 <main *ngIf="isLoaded; else loading">
 
-    <a routerLink="/coaches">Go back</a>
+    <a routerLink="/coaches/all">Go back</a>
 
     <div *ngIf="!!coach; else noCoach" class="coaches">
         <h1>{{ coach.firstName }} {{ coach.lastName }}</h1>

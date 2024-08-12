@@ -1,9 +1,11 @@
 package bg.softuni.GimyApi.init;
 
+import bg.softuni.GimyApi.model.service.CoachServiceModel;
 import bg.softuni.GimyApi.model.service.UserRegisterServiceModel;
 import bg.softuni.GimyApi.model.service.WorkoutProgramServiceModel;
 import bg.softuni.GimyApi.model.view.UserLoginViewModel;
 import bg.softuni.GimyApi.service.AuthorityService;
+import bg.softuni.GimyApi.service.CoachService;
 import bg.softuni.GimyApi.service.UserService;
 import bg.softuni.GimyApi.service.WorkoutProgramService;
 import org.springframework.boot.CommandLineRunner;
@@ -15,11 +17,13 @@ public class InitializeData implements CommandLineRunner {
     private final UserService userService;
     private final AuthorityService authorityService;
     private final WorkoutProgramService workoutProgramService;
+    private final CoachService coachService;
 
-    public InitializeData(UserService userService, AuthorityService authorityService, WorkoutProgramService workoutProgramService) {
+    public InitializeData(UserService userService, AuthorityService authorityService, WorkoutProgramService workoutProgramService, CoachService coachService) {
         this.userService = userService;
         this.authorityService = authorityService;
         this.workoutProgramService = workoutProgramService;
+        this.coachService = coachService;
     }
 
     @Override
@@ -29,18 +33,41 @@ public class InitializeData implements CommandLineRunner {
             return;
         }
 
-        System.out.println("Creating roles...");
+        createRoles();
+        createAdminUser();
+        createWorkoutProgram();
+        createCoach();
+    }
 
-        authorityService.initRoles();
+    private void createCoach() {
+        System.out.println("Creating coach...");
 
-        System.out.println("Creating an admin user...");
+        CoachServiceModel coachServiceModel = new CoachServiceModel(
+                "Dwayne",
+                "Johnson",
+                999.99,
+                "Do you smell what The Rock is cooking? You heard me, pal! No introduction needed. You better be ready to feel the pain if you decide to hire me as your personal coach! I am not coming to terms with your bullshit excuses! You wanna look like a real fkin man? Hit the button and let's get started!"
+        );
 
-        UserRegisterServiceModel adminUser = new UserRegisterServiceModel("admin@abv.bg", "Admin", "Adminov", "Admin123");
+        System.out.println("Coach to create " + coachServiceModel);
 
-        UserLoginViewModel userLoginViewModel = userService.registerUser(adminUser);
-        userService.createAdminUser(userLoginViewModel.getId());
+        String coachId = coachService.createCoach(coachServiceModel).getId();
 
-        System.out.println("Adding workout programs...");
+        System.out.println("Coach created!");
+
+        System.out.println("Adding reviews to the coach...");
+
+        // TODO: Check if all reviews are added correctly
+        coachService.addReview(coachId, "My testosterone levels literally double just as I am speaking to him... Online!!!");
+        coachService.addReview(coachId, "This man will make you go through HELL, but it is damn worth it!");
+        coachService.addReview(coachId, "There is nothing to say really... You can't expect anything less than amazing results with such a man as your coach! What a proffessional!");
+        coachService.addReview(coachId, "The Rock man... The one and only. Pure inspiration!");
+
+        System.out.println("Reviews added!");
+    }
+
+    private void createWorkoutProgram() {
+        System.out.println("Creating workout program...");
 
         WorkoutProgramServiceModel workoutProgram = new WorkoutProgramServiceModel(
                 "Ripped in 90 days",
@@ -51,8 +78,34 @@ public class InitializeData implements CommandLineRunner {
 
         String workoutProgramId = workoutProgramService.createWorkoutProgram(workoutProgram).getId();
 
+        System.out.println("Workout program created!");
+
+        System.out.println("Adding reviews to the workout program...");
+
+        // TODO: Check if all reviews are added correctly
         workoutProgramService.addReview(workoutProgramId, "I saw amazing results on the 2nd week!");
         workoutProgramService.addReview(workoutProgramId, "One month in and I've lost 25 pounds.");
         workoutProgramService.addReview(workoutProgramId, "My waist became so thin that my jeans started falling.");
+
+        System.out.println("Reviews added!");
+    }
+
+    private void createAdminUser() {
+        System.out.println("Creating an admin user...");
+
+        UserRegisterServiceModel adminUser = new UserRegisterServiceModel("admin@abv.bg", "Admin", "Adminov", "Admin123");
+
+        UserLoginViewModel userLoginViewModel = userService.registerUser(adminUser);
+        userService.createAdminUser(userLoginViewModel.getId());
+
+        System.out.println("Admin user created!");
+    }
+
+    private void createRoles() {
+        System.out.println("Creating roles...");
+
+        authorityService.initRoles();
+
+        System.out.println("Roles created!");
     }
 }
