@@ -1,6 +1,5 @@
 package bg.softuni.GimyApi.init;
 
-import bg.softuni.GimyApi.model.service.ReviewServiceModel;
 import bg.softuni.GimyApi.model.service.UserRegisterServiceModel;
 import bg.softuni.GimyApi.model.service.WorkoutProgramServiceModel;
 import bg.softuni.GimyApi.model.view.UserViewModel;
@@ -43,19 +42,6 @@ public class InitializeData implements CommandLineRunner {
 
         System.out.println("Adding workout programs...");
 
-        /*
-         "price": ,
-      "name": "",
-      "description": "",
-      "reviews": [
-        "",
-        "One month in and I've lost 25 pounds.",
-        "My waist became so thin that my jeans started falling."
-      ],
-      "details": "",
-
-         **/
-
         WorkoutProgramServiceModel workoutProgram = new WorkoutProgramServiceModel(
                 "Ripped in 90 days",
                 89.99,
@@ -63,11 +49,10 @@ public class InitializeData implements CommandLineRunner {
                 "Work out for three days, rest one. On Monday - Chest & Back. On Tuesday - Legs, Shoulders & Abs. On Wednesday - Bi's & Tri's. Rest for a day and repeat! Rest for 60-75s between sets."
         );
 
-        String workoutProgramId = workoutProgramService.createWorkoutProgram(workoutProgram);
+        String workoutProgramId = workoutProgramService.createWorkoutProgram(workoutProgram).getId();
 
-        String review = "I saw amazing results on the 2nd week!";
-        workoutProgramService.addReview(workoutProgramId, review);
-
-
+        workoutProgramService.addReview(workoutProgramId, "I saw amazing results on the 2nd week!");
+        workoutProgramService.addReview(workoutProgramId, "One month in and I've lost 25 pounds.");
+        workoutProgramService.addReview(workoutProgramId, "My waist became so thin that my jeans started falling.");
     }
 }

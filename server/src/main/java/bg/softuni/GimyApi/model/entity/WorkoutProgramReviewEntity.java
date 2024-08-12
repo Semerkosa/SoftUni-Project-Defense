@@ -37,4 +37,11 @@ public class WorkoutProgramReviewEntity extends BaseEntity {
     public void setWorkoutProgram(WorkoutProgramEntity workoutProgram) {
         this.workoutProgram = workoutProgram;
     }
+
+    @Override
+    public String toString() {
+        return "WorkoutProgramReviewEntity{" +
+                "review='" + review + '\'' +
+                '}';
+    }
 }

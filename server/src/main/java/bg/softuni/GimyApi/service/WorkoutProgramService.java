@@ -1,10 +1,11 @@
 package bg.softuni.GimyApi.service;
 
 import bg.softuni.GimyApi.model.service.WorkoutProgramServiceModel;
+import bg.softuni.GimyApi.model.view.WorkoutProgramViewModel;
 
 public interface WorkoutProgramService {
 
-    String createWorkoutProgram(WorkoutProgramServiceModel workoutProgram);
+    WorkoutProgramViewModel createWorkoutProgram(WorkoutProgramServiceModel workoutProgram);
 
-    void addReview(String workoutProgramId, String review);
+    boolean addReview(String workoutProgramId, String review);
 }
