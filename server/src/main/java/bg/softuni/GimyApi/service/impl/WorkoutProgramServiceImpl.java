@@ -39,7 +39,12 @@ public class WorkoutProgramServiceImpl implements WorkoutProgramService {
     public WorkoutProgramViewModel createWorkoutProgram(WorkoutProgramServiceModel workoutProgramServiceModel) {
         WorkoutProgramEntity workoutProgram = modelMapper.map(workoutProgramServiceModel, WorkoutProgramEntity.class);
 
-        return modelMapper.map(workoutProgramRepository.saveAndFlush(workoutProgram), WorkoutProgramViewModel.class);
+        WorkoutProgramViewModel viewModel = modelMapper.map(workoutProgramRepository.saveAndFlush(workoutProgram), WorkoutProgramViewModel.class);
+
+        viewModel.setReviews(new ArrayList<>());
+        viewModel.setCustomers(new ArrayList<>());
+
+        return viewModel;
     }
 
     @Override
@@ -125,6 +130,49 @@ public class WorkoutProgramServiceImpl implements WorkoutProgramService {
     public boolean isUserAdmin(String jwtToken) {
         String email = jwtUtil.extractEmail(jwtToken);
         return userService.isAdmin(email);
+    }
+
+    @Override
+    public boolean deleteProgramById(String workoutProgramId) {
+        Optional<WorkoutProgramEntity> optionalWorkoutProgram = workoutProgramRepository.findById(workoutProgramId);
+
+        // Invalid id
+        if (optionalWorkoutProgram.isEmpty()) {
+            System.out.println("Invalid id for deletion!");
+            return false;
+        }
+
+        workoutProgramRepository.delete(optionalWorkoutProgram.get());
+
+        System.out.println("Delete operation executed!");
+
+        // Tries to get the deleted entity. If it fails, then our deletion has been successful
+        optionalWorkoutProgram = workoutProgramRepository.findById(workoutProgramId);
+
+        return optionalWorkoutProgram.isEmpty();
+    }
+
+    @Override
+    public WorkoutProgramViewModel editProgramById(String workoutProgramId, WorkoutProgramServiceModel workoutProgramServiceModel) {
+        Optional<WorkoutProgramEntity> optionalWorkoutProgram = workoutProgramRepository.findById(workoutProgramId);
+
+        // Invalid id
+        if (optionalWorkoutProgram.isEmpty()) {
+            System.out.println("Invalid id!");
+            return null;
+        }
+
+        WorkoutProgramEntity workoutProgram = optionalWorkoutProgram.get();
+
+        workoutProgram.setName(workoutProgramServiceModel.getName());
+        workoutProgram.setDescription(workoutProgramServiceModel.getDescription());
+        workoutProgram.setDetails(workoutProgramServiceModel.getDetails());
+        workoutProgram.setPrice(workoutProgramServiceModel.getPrice());
+
+        return modelMapper.map(
+                workoutProgramRepository.saveAndFlush(workoutProgram),
+                WorkoutProgramViewModel.class
+        );
     }
 
 }

@@ -1,6 +1,7 @@
 package bg.softuni.GimyApi.web;
 
 import bg.softuni.GimyApi.model.service.WorkoutProgramServiceModel;
+import bg.softuni.GimyApi.model.view.CustomMessageViewModel;
 import bg.softuni.GimyApi.model.view.WorkoutProgramViewModel;
 import bg.softuni.GimyApi.service.WorkoutProgramService;
 import org.springframework.http.HttpStatus;
@@ -51,5 +52,52 @@ public class WorkoutProgramController {
         System.out.println("Program created!");
 
         return ResponseEntity.ok(workoutProgram);
+    }
+
+    @DeleteMapping("/delete/{workoutProgramId}")
+    public ResponseEntity<?> deleteWorkoutProgramById(@PathVariable("workoutProgramId") String workoutProgramId,
+                                                      @RequestHeader(name = "Authorization") String jwtToken) {
+        if (workoutProgramId == null || workoutProgramId.isEmpty()) {
+            return new ResponseEntity<>(new CustomMessageViewModel("Invalid reference"), HttpStatus.BAD_REQUEST);
+        }
+
+        String token = jwtToken.split("\\s+")[1];
+        boolean isAdmin = workoutProgramService.isUserAdmin(token);
+
+        if (!isAdmin) {
+            return new ResponseEntity<>(new CustomMessageViewModel("You don't have access to perform the action!"), HttpStatus.UNAUTHORIZED);
+        }
+
+        boolean success = workoutProgramService.deleteProgramById(workoutProgramId);
+
+        if (!success) {
+            return new ResponseEntity<>(new CustomMessageViewModel("Operation failed."), HttpStatus.BAD_REQUEST);
+        }
+
+        return ResponseEntity.ok(new CustomMessageViewModel("Workout program deleted!"));
+    }
+
+    @PatchMapping("/edit/{workoutProgramId}")
+    public ResponseEntity<?> editWorkoutProgramById(@PathVariable("workoutProgramId") String workoutProgramId,
+                                                    @RequestBody WorkoutProgramServiceModel workoutProgramServiceModel,
+                                                    @RequestHeader(name = "Authorization") String jwtToken) {
+        if (workoutProgramId == null || workoutProgramId.isEmpty()) {
+            return new ResponseEntity<>(new CustomMessageViewModel("Invalid reference"), HttpStatus.BAD_REQUEST);
+        }
+
+        String token = jwtToken.split("\\s+")[1];
+        boolean isAdmin = workoutProgramService.isUserAdmin(token);
+
+        if (!isAdmin) {
+            return new ResponseEntity<>(new CustomMessageViewModel("You don't have access to perform the action!"), HttpStatus.UNAUTHORIZED);
+        }
+
+        WorkoutProgramViewModel viewModel = workoutProgramService.editProgramById(workoutProgramId, workoutProgramServiceModel);
+
+        if (viewModel == null) {
+            return new ResponseEntity<>(new CustomMessageViewModel("Invalid reference"), HttpStatus.BAD_REQUEST);
+        }
+
+        return ResponseEntity.ok(new CustomMessageViewModel("Workout program updated!"));
     }
 }

@@ -25,6 +25,8 @@ export class WorkoutProgramListItemComponent implements OnChanges {
     @Output() onProgramDelete = new EventEmitter<string>();
 
     ngOnChanges(): void {
+        console.log("Program", this.program);
+        
         this.isAdmin = this.userService.isAdmin();
 
         const userId = this.userService.getUserId();
@@ -99,14 +101,18 @@ export class WorkoutProgramListItemComponent implements OnChanges {
     deleteProgram() {
         if (confirm("Do you really want to delete this Workout Program? This action cannot be undone!")) {
             const programId = this.program.id;
+
             this.workoutProgramService.deleteWorkoutProgramById$(programId).subscribe({
                 next: deletedProgram => {
                     console.log("Deleted the program with id ", programId);
+                    console.log(deletedProgram);
 
                     this.onProgramDelete.emit(programId);
                 },
                 error: err => {
-                    console.log("Failed to delete the program with id ", programId, err);
+                    console.log("Failed to delete the program with id ", programId);
+                    console.log(err);
+                    
                 }
             });
         }

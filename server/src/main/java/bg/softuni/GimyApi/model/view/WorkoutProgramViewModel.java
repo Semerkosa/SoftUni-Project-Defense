@@ -1,5 +1,6 @@
 package bg.softuni.GimyApi.model.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WorkoutProgramViewModel extends BaseViewModel {
@@ -12,6 +13,8 @@ public class WorkoutProgramViewModel extends BaseViewModel {
     private List<String> customers;
 
     public WorkoutProgramViewModel() {
+        reviews = new ArrayList<>();
+        customers = new ArrayList<>();
     }
 
     public String getName() {

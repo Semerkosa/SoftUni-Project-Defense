@@ -35,10 +35,10 @@ export class WorkoutProgramService {
   }
 
   deleteWorkoutProgramById$(programId: string): Observable<any> {
-    return this.http.delete<any>(`${serverUrl}/${programId}`, this.userService.getUpdatedHttpOptions());
+    return this.http.delete<any>(`${serverUrl}/delete/${programId}`, this.userService.getUpdatedHttpOptions());
   }
 
   editWorkoutProgramById$(programId: string, program: IEditProgram): Observable<IWorkoutProgram> {
-    return this.http.patch<IWorkoutProgram>(`${serverUrl}/${programId}`, program, this.userService.getUpdatedHttpOptions());
+    return this.http.patch<IWorkoutProgram>(`${serverUrl}/edit/${programId}`, program, this.userService.getUpdatedHttpOptions());
   }
 }
