@@ -95,9 +95,11 @@ public class WorkoutProgramController {
         WorkoutProgramViewModel viewModel = workoutProgramService.editProgramById(workoutProgramId, workoutProgramServiceModel);
 
         if (viewModel == null) {
-            return new ResponseEntity<>(new CustomMessageViewModel("Invalid reference"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new CustomMessageViewModel("Workout program not found!"), HttpStatus.NOT_FOUND);
         }
 
         return ResponseEntity.ok(new CustomMessageViewModel("Workout program updated!"));
     }
+
+//    @PostMapping()
 }

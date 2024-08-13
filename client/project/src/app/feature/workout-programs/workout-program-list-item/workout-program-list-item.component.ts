@@ -89,7 +89,7 @@ export class WorkoutProgramListItemComponent implements OnChanges {
             },
             error: err => {
                 console.log(err);
-                alert("Something went wrong. Please re-login.")
+                console.log("Something went wrong. Please re-login.");
             }
         });
     }

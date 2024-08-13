@@ -4,8 +4,10 @@ import bg.softuni.GimyApi.model.service.UserLoginServiceModel;
 import bg.softuni.GimyApi.model.service.UserRegisterServiceModel;
 import bg.softuni.GimyApi.model.view.ErrorViewModel;
 import bg.softuni.GimyApi.model.view.UserLoginViewModel;
+import bg.softuni.GimyApi.model.view.UserViewModel;
 import bg.softuni.GimyApi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,5 +52,18 @@ public class UserController {
         System.out.println("Successful login");
 
         return ResponseEntity.ok(userLoginViewModel);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getUserDataById(@PathVariable("userId") String userId) {
+        if (userId == null || userId.isEmpty()) {
+            return new ResponseEntity<>(new ErrorViewModel("Invalid reference!"), HttpStatus.BAD_REQUEST);
+        }
+
+        UserViewModel viewModel = userService.getUserDataById(userId);
+
+        if (viewModel == null) {
+            return new ResponseEntity<>(new ErrorViewModel("User not found!"), HttpStatus.NOT_FOUND);
+        }
     }
 }

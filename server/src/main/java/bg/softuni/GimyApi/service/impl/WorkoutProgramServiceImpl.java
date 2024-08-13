@@ -69,9 +69,7 @@ public class WorkoutProgramServiceImpl implements WorkoutProgramService {
     }
 
     @Override
-    public List<WorkoutProgramViewModel> getAllWorkoutPrograms() {
-        List<WorkoutProgramEntity> workoutPrograms = workoutProgramRepository.findAll();
-
+    public List<WorkoutProgramViewModel> getWorkoutProgramViewModels(List<WorkoutProgramEntity> workoutPrograms) {
         List<WorkoutProgramViewModel> viewModels = new ArrayList<>();
 
         for (WorkoutProgramEntity workoutProgram : workoutPrograms) {
@@ -95,6 +93,12 @@ public class WorkoutProgramServiceImpl implements WorkoutProgramService {
         }
 
         return viewModels;
+    }
+
+    @Override
+    public List<WorkoutProgramViewModel> getAllWorkoutPrograms() {
+        List<WorkoutProgramEntity> workoutPrograms = workoutProgramRepository.findAll();
+        return getWorkoutProgramViewModels(workoutPrograms);
     }
 
     @Override
@@ -158,7 +162,7 @@ public class WorkoutProgramServiceImpl implements WorkoutProgramService {
 
         // Invalid id
         if (optionalWorkoutProgram.isEmpty()) {
-            System.out.println("Invalid id!");
+            System.out.println("Workout program not found with id " + workoutProgramId);
             return null;
         }
 

@@ -23,7 +23,6 @@ export class WorkoutProgramsUserListComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.subscription = this.userService.getUserById$(this.userService.getUserId()).subscribe({
             next: userResponse => {
-                this.isLoaded = true;
                 console.log("userById", userResponse);
 
                 if (userResponse.purchasedWorkoutPrograms?.length > 0) {
@@ -31,8 +30,10 @@ export class WorkoutProgramsUserListComponent implements OnInit, OnDestroy {
                 }
             },
             error: err => {
-                this.isLoaded = true;
                 console.log(err);
+            },
+            complete: () => {
+                this.isLoaded = true;
             }
         });
     }

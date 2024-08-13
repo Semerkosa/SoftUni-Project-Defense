@@ -5,6 +5,7 @@ import bg.softuni.GimyApi.model.entity.UserEntity;
 import bg.softuni.GimyApi.model.service.UserLoginServiceModel;
 import bg.softuni.GimyApi.model.service.UserRegisterServiceModel;
 import bg.softuni.GimyApi.model.view.UserLoginViewModel;
+import bg.softuni.GimyApi.model.view.UserViewModel;
 import bg.softuni.GimyApi.repository.AuthorityRepository;
 import bg.softuni.GimyApi.repository.UserRepository;
 import bg.softuni.GimyApi.service.UserService;
@@ -121,6 +122,21 @@ public class UserServiceImpl implements UserService {
         AuthorityEntity adminAuthority = authorityRepository.findByAuthority("ADMIN");
 
         return userAuthorities.contains(adminAuthority);
+    }
+
+    @Override
+    public UserViewModel getUserDataById(String userId) {
+        Optional<UserEntity> optionalUser = userRepository.findById(userId);
+
+        if (optionalUser.isEmpty()) {
+            System.out.println("No such user with id " + userId);
+            return null;
+        }
+
+        UserEntity userEntity = optionalUser.get();
+
+
+        return null;
     }
 
     private UserEntity getUserByEmail(String email) {
