@@ -18,9 +18,9 @@ public interface WorkoutProgramService {
 
     WorkoutProgramViewModel getWorkoutProgramById(String workoutProgramId);
 
-    boolean isUserAdmin(String jwtToken);
-
     boolean deleteProgramById(String workoutProgramId);
 
     WorkoutProgramViewModel editProgramById(String workoutProgramId, WorkoutProgramServiceModel workoutProgramServiceModel);
+
+    boolean purchaseWorkoutProgram(String userId, String workoutProgramId);
 }

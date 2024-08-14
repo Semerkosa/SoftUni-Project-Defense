@@ -29,8 +29,7 @@ public class UserController {
         UserLoginViewModel userLoginViewModel = userService.registerUser(userRegisterServiceModel);
 
         if (userLoginViewModel == null) {
-            // TODO: Handle better
-            return ResponseEntity.ok(new ErrorViewModel("Email exists!"));
+            return new ResponseEntity<>(new ErrorViewModel("Email exists!"), HttpStatus.BAD_REQUEST);
         }
 
         System.out.println("Successful registration (" + userLoginViewModel + ")");
@@ -65,5 +64,7 @@ public class UserController {
         if (viewModel == null) {
             return new ResponseEntity<>(new ErrorViewModel("User not found!"), HttpStatus.NOT_FOUND);
         }
+
+        return ResponseEntity.ok(viewModel);
     }
 }

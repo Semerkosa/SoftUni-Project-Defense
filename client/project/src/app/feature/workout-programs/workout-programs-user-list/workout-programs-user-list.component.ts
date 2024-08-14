@@ -25,8 +25,8 @@ export class WorkoutProgramsUserListComponent implements OnInit, OnDestroy {
             next: userResponse => {
                 console.log("userById", userResponse);
 
-                if (userResponse.purchasedWorkoutPrograms?.length > 0) {
-                    this.workoutPrograms = userResponse.purchasedWorkoutPrograms;
+                if (userResponse.workoutPrograms?.length > 0) {
+                    this.workoutPrograms = userResponse.workoutPrograms;
                 }
             },
             error: err => {

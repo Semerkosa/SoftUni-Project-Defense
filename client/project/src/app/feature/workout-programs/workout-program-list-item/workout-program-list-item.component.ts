@@ -47,41 +47,10 @@ export class WorkoutProgramListItemComponent implements OnChanges {
         const programId = program.id;
         const userId = this.userService.getUserId();
 
-        this.userService.getUserById$(userId).subscribe({
-            next: user => {
-                console.log("User by id is", user);
-
-                let userPrograms = user.purchasedWorkoutPrograms;
-
-                userPrograms.push(program);
-                console.log('New list with programs', userPrograms);
-
-                this.userService.editWorkoutProgramsForGivenUser$(userId, userPrograms).subscribe({
-                    next: editedUser => {
-                        console.log("Edited user is ", editedUser);
-
-                    },
-                    error: err => {
-                        console.log(err);
-
-                    }
-                });
-
-                let workoutProgramCustomers = program.customers;
-
-                workoutProgramCustomers.push(user.id);
-                console.log('New list with customers', workoutProgramCustomers);
-
-                this.workoutProgramService.editUsersForGivenWorkoutProgram$(programId, workoutProgramCustomers).subscribe({
-                    next: editedProgram => {
-                        console.log("Edited program is ", editedProgram);
-
-                    },
-                    error: err => {
-                        console.log(err);
-                    }
-                });
-
+        this.workoutProgramService.purchaseProgram$(userId, programId).subscribe({
+            next: response => {
+                console.log(response);                
+    
                 btn.textContent = 'Purchased';
                 btn.style.backgroundColor = 'darkGreen';
                 btn.style.color = 'white';
@@ -89,7 +58,6 @@ export class WorkoutProgramListItemComponent implements OnChanges {
             },
             error: err => {
                 console.log(err);
-                console.log("Something went wrong. Please re-login.");
             }
         });
     }

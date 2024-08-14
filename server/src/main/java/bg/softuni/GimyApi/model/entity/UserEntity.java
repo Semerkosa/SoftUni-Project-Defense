@@ -159,4 +159,11 @@ public class UserEntity extends BaseEntity implements UserDetails {
         this.coach = coach;
         return this;
     }
+
+    public void addWorkoutProgram(WorkoutProgramEntity workoutProgram) {
+        List<WorkoutProgramEntity> updatedWorkoutPrograms = getWorkoutPrograms() == null ? new ArrayList<>() : getWorkoutPrograms();
+        updatedWorkoutPrograms.add(workoutProgram);
+
+        this.setWorkoutPrograms(updatedWorkoutPrograms);
+    }
 }

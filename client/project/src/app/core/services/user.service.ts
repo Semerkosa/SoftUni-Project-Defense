@@ -10,6 +10,7 @@ const serverUrl = `${environment.apiUrl}/user`;
 	providedIn: 'root'
 })
 export class UserService {
+
 	private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
 	public isAuthenticated$: Observable<boolean> = this.isAuthenticatedSubject.asObservable();
 
@@ -52,13 +53,13 @@ export class UserService {
 		return this.http.get<IUser>(`${serverUrl}/${id}`, this.getUpdatedHttpOptions());
 	}
 
-	editWorkoutProgramsForGivenUser$(userId: string, programs: IWorkoutProgram[]): Observable<IUser> {
-		const body = {
-			"purchasedWorkoutPrograms": programs
-		}
+	// editWorkoutProgramsForGivenUser$(userId: string, programs: IWorkoutProgram[]): Observable<IUser> {
+	// 	const body = {
+	// 		"workoutPrograms": programs
+	// 	}
 
-		return this.http.patch<IUser>(`${serverUrl}/${userId}`, body, this.getUpdatedHttpOptions());
-	}
+	// 	return this.http.patch<IUser>(`${serverUrl}/${userId}`, body, this.getUpdatedHttpOptions());
+	// }
 
 	editCoachForGivenUser$(userId: string, coach?: ICoach): Observable<ICoach> {
 		const body = {

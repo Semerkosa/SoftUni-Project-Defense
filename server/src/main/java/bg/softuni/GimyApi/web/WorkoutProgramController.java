@@ -2,10 +2,11 @@ package bg.softuni.GimyApi.web;
 
 import bg.softuni.GimyApi.model.service.WorkoutProgramServiceModel;
 import bg.softuni.GimyApi.model.view.CustomMessageViewModel;
+import bg.softuni.GimyApi.model.view.ErrorViewModel;
 import bg.softuni.GimyApi.model.view.WorkoutProgramViewModel;
+import bg.softuni.GimyApi.service.UserService;
 import bg.softuni.GimyApi.service.WorkoutProgramService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,9 +18,11 @@ import java.util.Objects;
 public class WorkoutProgramController {
 
     private final WorkoutProgramService workoutProgramService;
+    private final UserService userService;
 
-    public WorkoutProgramController(WorkoutProgramService workoutProgramService) {
+    public WorkoutProgramController(WorkoutProgramService workoutProgramService, UserService userService) {
         this.workoutProgramService = workoutProgramService;
+        this.userService = userService;
     }
 
     @GetMapping("/all")
@@ -42,7 +45,7 @@ public class WorkoutProgramController {
     public ResponseEntity<?> createWorkoutProgram(@RequestBody WorkoutProgramServiceModel workoutProgramServiceModel,
                                                   @RequestHeader(name = "Authorization") String jwtToken) {
         String token = jwtToken.split("\\s+")[1];
-        boolean isAdmin = workoutProgramService.isUserAdmin(token);
+        boolean isAdmin = userService.isUserAdmin(token);
 
         if (!isAdmin) {
             return new ResponseEntity<>("You don't have access to perform the action!", HttpStatus.UNAUTHORIZED);
@@ -54,6 +57,25 @@ public class WorkoutProgramController {
         return ResponseEntity.ok(workoutProgram);
     }
 
+    @PostMapping("/purchase")
+    public ResponseEntity<?> purchaseWorkoutProgram(@RequestParam("userId") String userId,
+                                                    @RequestParam("workoutProgramId") String workoutProgramId) {
+        System.out.println("Param1: " + userId);
+        System.out.println("Param2: " + workoutProgramId);
+
+        if (userId == null || userId.isEmpty() || workoutProgramId == null || workoutProgramId.isEmpty()) {
+            return new ResponseEntity<>(new ErrorViewModel("Invalid reference!"), HttpStatus.BAD_REQUEST);
+        }
+
+        boolean success = workoutProgramService.purchaseWorkoutProgram(userId, workoutProgramId);
+
+        if (!success) {
+            return new ResponseEntity<>(new ErrorViewModel("Invalid reference!"), HttpStatus.NOT_FOUND);
+        }
+
+        return ResponseEntity.ok(new CustomMessageViewModel("Successfully purchased the workout program."));
+    }
+
     @DeleteMapping("/delete/{workoutProgramId}")
     public ResponseEntity<?> deleteWorkoutProgramById(@PathVariable("workoutProgramId") String workoutProgramId,
                                                       @RequestHeader(name = "Authorization") String jwtToken) {
@@ -62,7 +84,7 @@ public class WorkoutProgramController {
         }
 
         String token = jwtToken.split("\\s+")[1];
-        boolean isAdmin = workoutProgramService.isUserAdmin(token);
+        boolean isAdmin = userService.isUserAdmin(token);
 
         if (!isAdmin) {
             return new ResponseEntity<>(new CustomMessageViewModel("You don't have access to perform the action!"), HttpStatus.UNAUTHORIZED);
@@ -86,7 +108,7 @@ public class WorkoutProgramController {
         }
 
         String token = jwtToken.split("\\s+")[1];
-        boolean isAdmin = workoutProgramService.isUserAdmin(token);
+        boolean isAdmin = userService.isUserAdmin(token);
 
         if (!isAdmin) {
             return new ResponseEntity<>(new CustomMessageViewModel("You don't have access to perform the action!"), HttpStatus.UNAUTHORIZED);
@@ -100,6 +122,4 @@ public class WorkoutProgramController {
 
         return ResponseEntity.ok(new CustomMessageViewModel("Workout program updated!"));
     }
-
-//    @PostMapping()
 }

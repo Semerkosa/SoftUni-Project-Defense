@@ -22,13 +22,10 @@ export class WorkoutProgramService {
     return this.http.get<IWorkoutProgram>(`${serverUrl}/${id}`, this.userService.getUpdatedHttpOptions())
   }
 
-  editUsersForGivenWorkoutProgram$(workoutProgramId: string, userIds: string[]): Observable<IWorkoutProgram> {
-		const body = {
-			"customers": userIds ? userIds : []
-		}
-    
-		return this.http.patch<IWorkoutProgram>(`${serverUrl}/${workoutProgramId}`, body, this.userService.getUpdatedHttpOptions());
-	}
+  purchaseProgram$(userId: string, programId: string): Observable<any> {
+    const url = `${serverUrl}/purchase?userId=${userId}&workoutProgramId=${programId}`;
+		return this.http.post<any>(url, null, this.userService.getUpdatedHttpOptions());
+  }
 
   createWorkoutProgram$(program: ICreateProgram): Observable<IWorkoutProgram> {
     return this.http.post<IWorkoutProgram>(`${serverUrl}/create`, program, this.userService.getUpdatedHttpOptions());
@@ -39,6 +36,6 @@ export class WorkoutProgramService {
   }
 
   editWorkoutProgramById$(programId: string, program: IEditProgram): Observable<IWorkoutProgram> {
-    return this.http.patch<IWorkoutProgram>(`${serverUrl}/edit/${programId}`, program, this.userService.getUpdatedHttpOptions());
+     return this.http.patch<IWorkoutProgram>(`${serverUrl}/edit/${programId}`, program, this.userService.getUpdatedHttpOptions());
   }
 }

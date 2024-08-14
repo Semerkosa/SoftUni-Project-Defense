@@ -1,5 +1,6 @@
 package bg.softuni.GimyApi.model.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CoachViewModel extends BaseViewModel {
@@ -12,6 +13,8 @@ public class CoachViewModel extends BaseViewModel {
     private List<String> clients;
 
     public CoachViewModel() {
+        reviews = new ArrayList<>();
+        clients = new ArrayList<>();
     }
 
     public String getFirstName() {

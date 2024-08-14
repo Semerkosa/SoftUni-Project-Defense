@@ -1,16 +1,22 @@
 package bg.softuni.GimyApi.service.impl;
 
 import bg.softuni.GimyApi.model.entity.AuthorityEntity;
+import bg.softuni.GimyApi.model.entity.CoachEntity;
 import bg.softuni.GimyApi.model.entity.UserEntity;
 import bg.softuni.GimyApi.model.service.UserLoginServiceModel;
 import bg.softuni.GimyApi.model.service.UserRegisterServiceModel;
+import bg.softuni.GimyApi.model.view.CoachViewModel;
 import bg.softuni.GimyApi.model.view.UserLoginViewModel;
 import bg.softuni.GimyApi.model.view.UserViewModel;
+import bg.softuni.GimyApi.model.view.WorkoutProgramViewModel;
 import bg.softuni.GimyApi.repository.AuthorityRepository;
 import bg.softuni.GimyApi.repository.UserRepository;
+import bg.softuni.GimyApi.service.CoachService;
 import bg.softuni.GimyApi.service.UserService;
+import bg.softuni.GimyApi.service.WorkoutProgramService;
 import bg.softuni.GimyApi.util.JwtUtil;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,14 +31,19 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
 
+    private final WorkoutProgramService workoutProgramService;
+    private final CoachService coachService;
+
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
 
-    public UserServiceImpl(UserRepository userRepository, AuthorityRepository authorityRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, JwtUtil jwtUtil, AuthenticationManager authenticationManager) {
+    public UserServiceImpl(UserRepository userRepository, AuthorityRepository authorityRepository, WorkoutProgramService workoutProgramService, CoachService coachService, ModelMapper modelMapper, PasswordEncoder passwordEncoder, JwtUtil jwtUtil, AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.authorityRepository = authorityRepository;
+        this.workoutProgramService = workoutProgramService;
+        this.coachService = coachService;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
@@ -125,6 +136,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean isUserAdmin(String jwtToken) {
+        String email = jwtUtil.extractEmail(jwtToken);
+        return isAdmin(email);
+    }
+
+    @Override
     public UserViewModel getUserDataById(String userId) {
         Optional<UserEntity> optionalUser = userRepository.findById(userId);
 
@@ -135,8 +152,22 @@ public class UserServiceImpl implements UserService {
 
         UserEntity userEntity = optionalUser.get();
 
+        UserViewModel userViewModel = modelMapper.map(userEntity, UserViewModel.class);
 
-        return null;
+        List<WorkoutProgramViewModel> workoutProgramViewModels = workoutProgramService
+                .getWorkoutProgramViewModels(userEntity.getWorkoutPrograms());
+
+        userViewModel.setWorkoutPrograms(workoutProgramViewModels);
+
+        CoachEntity userCoach = userEntity.getCoach();
+
+        userViewModel.setCoach(
+                userCoach == null ?
+                        null :
+                        coachService.getCoachById(userCoach.getId())
+        );
+
+        return userViewModel;
     }
 
     private UserEntity getUserByEmail(String email) {

@@ -5,9 +5,9 @@ import bg.softuni.GimyApi.model.entity.WorkoutProgramEntity;
 import bg.softuni.GimyApi.model.entity.WorkoutProgramReviewEntity;
 import bg.softuni.GimyApi.model.service.WorkoutProgramServiceModel;
 import bg.softuni.GimyApi.model.view.WorkoutProgramViewModel;
+import bg.softuni.GimyApi.repository.UserRepository;
 import bg.softuni.GimyApi.repository.WorkoutProgramRepository;
 import bg.softuni.GimyApi.repository.WorkoutProgramReviewRepository;
-import bg.softuni.GimyApi.service.UserService;
 import bg.softuni.GimyApi.service.WorkoutProgramService;
 import bg.softuni.GimyApi.util.JwtUtil;
 import org.modelmapper.ModelMapper;
@@ -22,15 +22,16 @@ public class WorkoutProgramServiceImpl implements WorkoutProgramService {
 
     private final WorkoutProgramRepository workoutProgramRepository;
     private final WorkoutProgramReviewRepository workoutProgramReviewRepository;
+    // Another solution is to inject the UserService, but we will have to lazy load it to avoid circular exception
+    private final UserRepository userRepository;
 
-    private final UserService userService;
     private final ModelMapper modelMapper;
     private final JwtUtil jwtUtil;
 
-    public WorkoutProgramServiceImpl(WorkoutProgramRepository workoutProgramRepository, WorkoutProgramReviewRepository workoutProgramReviewRepository, UserService userService, ModelMapper modelMapper, JwtUtil jwtUtil) {
+    public WorkoutProgramServiceImpl(WorkoutProgramRepository workoutProgramRepository, WorkoutProgramReviewRepository workoutProgramReviewRepository, UserRepository userRepository, ModelMapper modelMapper, JwtUtil jwtUtil) {
         this.workoutProgramRepository = workoutProgramRepository;
         this.workoutProgramReviewRepository = workoutProgramReviewRepository;
-        this.userService = userService;
+        this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.jwtUtil = jwtUtil;
     }
@@ -131,12 +132,6 @@ public class WorkoutProgramServiceImpl implements WorkoutProgramService {
     }
 
     @Override
-    public boolean isUserAdmin(String jwtToken) {
-        String email = jwtUtil.extractEmail(jwtToken);
-        return userService.isAdmin(email);
-    }
-
-    @Override
     public boolean deleteProgramById(String workoutProgramId) {
         Optional<WorkoutProgramEntity> optionalWorkoutProgram = workoutProgramRepository.findById(workoutProgramId);
 
@@ -177,6 +172,30 @@ public class WorkoutProgramServiceImpl implements WorkoutProgramService {
                 workoutProgramRepository.saveAndFlush(workoutProgram),
                 WorkoutProgramViewModel.class
         );
+    }
+
+    @Override
+    public boolean purchaseWorkoutProgram(String userId, String workoutProgramId) {
+        Optional<UserEntity> optionalUser = userRepository.findById(userId);
+
+        if (optionalUser.isEmpty()) {
+            return false;
+        }
+
+        Optional<WorkoutProgramEntity> optionalWorkoutProgram = workoutProgramRepository.findById(workoutProgramId);
+
+        if (optionalWorkoutProgram.isEmpty()) {
+            return false;
+        }
+
+        UserEntity userEntity = optionalUser.get();
+        WorkoutProgramEntity workoutProgram = optionalWorkoutProgram.get();
+
+        userEntity.addWorkoutProgram(workoutProgram);
+
+        userRepository.saveAndFlush(userEntity);
+
+        return true;
     }
 
 }

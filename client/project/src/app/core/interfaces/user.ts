@@ -3,6 +3,6 @@ import { IWorkoutProgram } from "./workout-program";
 
 export interface IUser {
     id: string;
-    purchasedWorkoutPrograms: IWorkoutProgram[];
+    workoutPrograms: IWorkoutProgram[];
     coach: ICoach;
 }

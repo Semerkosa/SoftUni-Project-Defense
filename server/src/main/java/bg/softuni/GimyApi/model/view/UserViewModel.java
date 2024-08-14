@@ -4,18 +4,18 @@ import java.util.List;
 
 public class UserViewModel extends BaseViewModel {
 
-    private List<WorkoutProgramViewModel> workoutProgram;
+    private List<WorkoutProgramViewModel> workoutPrograms;
     private CoachViewModel coach;
 
     public UserViewModel() {
     }
 
-    public List<WorkoutProgramViewModel> getWorkoutProgram() {
-        return workoutProgram;
+    public List<WorkoutProgramViewModel> getWorkoutPrograms() {
+        return workoutPrograms;
     }
 
-    public UserViewModel setWorkoutProgram(List<WorkoutProgramViewModel> workoutProgram) {
-        this.workoutProgram = workoutProgram;
+    public UserViewModel setWorkoutPrograms(List<WorkoutProgramViewModel> workoutPrograms) {
+        this.workoutPrograms = workoutPrograms;
         return this;
     }
 

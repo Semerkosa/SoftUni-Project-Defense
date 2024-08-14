@@ -17,5 +17,7 @@ public interface UserService {
 
     boolean isAdmin(String email);
 
+    boolean isUserAdmin(String jwtToken);
+
     UserViewModel getUserDataById(String userId);
 }

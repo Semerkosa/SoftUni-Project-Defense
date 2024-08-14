@@ -50,10 +50,7 @@ export class RegisterComponent implements OnInit {
             email: email,
             firstName: firstName,
             lastName: lastName,
-            password: password,
-            // purchasedWorkoutPrograms: [],
-            // coach: {},
-            // isAdmin: false
+            password: password
         };
 
         // this.userService.register$(body)
@@ -85,40 +82,21 @@ export class RegisterComponent implements OnInit {
             next: response => {
                 console.log('Registered user response:', response);
 
-                // localStorage.setItem('id', response.id);
-                // // localStorage.setItem('token', response.accessToken);
-                // localStorage.setItem('isAdmin', "false");
-                // localStorage.setItem('fullName', response.lastName ? `${response.firstName} ${response.lastName}` : `${response.firstName}`);
-
-                // this.userService.updateLoginStatus(true);
-
-                if (response.error) {
-                    this.errorMessage = "Email exists!";
-
-                    this.registerFormGroup.setValue({
-                        email: "",
-                        firstName,
-                        lastName,
-                        password: ""
-                    });
-
-                    this.registerFormGroup.markAsUntouched();
-                    return;
-                }
-
                 this.router.navigate([`/login`]);
             },
-            complete: () => {
-                console.log('Registration stream completed')
-            },
             error: (err) => {
-                console.log("HTTP Error: ", err);
-                this.errorMessage = err.message;
+                // console.log("HTTP Error: ", err);
+
+                if (err.status == 400) {
+                    this.errorMessage = "Email exists!";
+                } else {
+                    this.errorMessage = "Something went wrong!";
+                }
 
                 this.registerFormGroup.setValue({
-                    email: email,
-                    firstName: firstName,
-                    lastName: lastName,
+                    email: "",
+                    firstName,
+                    lastName,
                     password: ""
                 });
 
