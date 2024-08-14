@@ -1,0 +1,22 @@
+form {
+    border: 1px solid grey;
+    padding: 1rem;
+    border-radius: 20px;
+    margin-bottom: 4rem;
+
+    .error {
+        max-width: unset;
+        text-align: start;
+        margin-left: 1.1rem;
+    }
+
+    .error-msg {
+        text-align: center;
+        font-size: 1.5rem;
+    }
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}

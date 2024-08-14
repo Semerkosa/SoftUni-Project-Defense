@@ -11,11 +11,10 @@
             <p *ngFor="let review of workoutProgram.reviews">
                 - "{{ review }}"
             </p>
+            
+            <button *ngIf="isLoggedIn" class="btn create" (click)="toggleReviewForm()">Create</button>
 
-            <!-- <div class="price-info">
-                <span>Costs only <strong>{{ workoutProgram.price }}$</strong></span>
-                <button class="btn">Buy</button>
-            </div> -->
+            <app-add-review *ngIf="shouldShowReviewForm" (onReviewAdded)="addReviewToList($event, workoutProgram)"></app-add-review>
         </div>
     </div>
 

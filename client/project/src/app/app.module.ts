@@ -11,6 +11,7 @@ import { PagesModule } from './feature/pages/pages.module';
 import { CoachesModule } from './feature/coaches/coaches.module';
 import { WorkoutProgramsModule } from './feature/workout-programs/workout-programs.module';
 import { PaymentModule } from './feature/payment/payment.module';
+import { ReviewsModule } from './feature/reviews/reviews.module';
 
 @NgModule({
 	declarations: [
@@ -26,7 +27,8 @@ import { PaymentModule } from './feature/payment/payment.module';
 		PagesModule,
 		CoachesModule,
 		WorkoutProgramsModule,
-		PaymentModule
+		PaymentModule,
+		ReviewsModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]

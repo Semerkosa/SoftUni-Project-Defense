@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { UserService } from './services/user.service';
 import { WorkoutProgramService } from './services/workout-program.service';
 import { CoachService } from './services/coach.service';
+import { ReviewService } from './services/review.service';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ export class CoreModule {
         UserService,
         WorkoutProgramService,
         CoachService,
+        ReviewService,
       ]
     }
   }

@@ -1,0 +1,19 @@
+<form [formGroup]="addReviewFormGroup" (ngSubmit)="addReview()">
+    <h2>Create Workout Program</h2>
+
+    <p *ngIf="errorMessage" class="error error-msg">{{ errorMessage }}</p>
+
+    <div class="form-input">
+        <label for="review">Leave a review:</label>
+        <input type="text" id="review" [class.input-error]="shouldShowErrorForControl('review')"
+            formControlName="review">
+    </div>
+
+    <ng-container *ngIf="shouldShowErrorForControl('review')">
+        <p *ngIf="addReviewFormGroup.controls['review'].errors?.['required']" class="error">
+            Program details are required!
+        </p>
+    </ng-container>
+
+    <button [class.disabled-btn]="addReviewFormGroup.invalid" [disabled]="addReviewFormGroup.invalid">Post</button>
+</form>
