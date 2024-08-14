@@ -10,8 +10,8 @@
 <ng-container *ngIf="isAdmin">
     <div class="admin-panel">
         <h3>* Admin panel *</h3>
-        <p *ngIf="program.customers.length > 0; else noCustomers" class="customers">Count of customers who have purchased this program: {{
-            program.customers.length }}</p>
+        <p *ngIf="program.customers.length > 0; else noCustomers" class="customers">Count of customers who have purchased this program: <b>{{
+            program.customers.length }}</b></p>
 
         <ng-template #noCustomers>
             <p class="no-customers">No customers have purchased this.</p>

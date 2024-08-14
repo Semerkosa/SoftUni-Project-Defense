@@ -14,4 +14,8 @@ public interface CoachService {
     List<CoachViewModel> getAllCoaches();
 
     CoachViewModel getCoachById(String coachId);
+
+    boolean hireCoach(String userId, String coachId);
+
+    boolean cancelCoach(String userId, String coachId);
 }

@@ -37,36 +37,20 @@ export class UserService {
 
 	getJwtToken(): string {
 		const token = localStorage.getItem("token");
-		console.log("JWT Token ", token);
+		// console.log("JWT Token ", token);
 
 		return token ? token : "";
 	}
 
 	getUserId(): string {
 		const userId = localStorage.getItem("id");
-		console.log("userService called for user id ", userId);
+		// console.log("userService called for user id ", userId);
 
 		return userId ? userId : "";
 	}
 
 	getUserById$(id: string): Observable<IUser> {
 		return this.http.get<IUser>(`${serverUrl}/${id}`, this.getUpdatedHttpOptions());
-	}
-
-	// editWorkoutProgramsForGivenUser$(userId: string, programs: IWorkoutProgram[]): Observable<IUser> {
-	// 	const body = {
-	// 		"workoutPrograms": programs
-	// 	}
-
-	// 	return this.http.patch<IUser>(`${serverUrl}/${userId}`, body, this.getUpdatedHttpOptions());
-	// }
-
-	editCoachForGivenUser$(userId: string, coach?: ICoach): Observable<ICoach> {
-		const body = {
-			"coach": coach? coach : {} // Will unset the coach if it wasn't passed as a parameter
-		}
-
-		return this.http.patch<ICoach>(`${serverUrl}/${userId}`, body, this.getUpdatedHttpOptions());
 	}
 
 	login$(user: ILoginUserDto): Observable<any> {

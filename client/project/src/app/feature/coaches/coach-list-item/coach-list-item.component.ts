@@ -28,45 +28,32 @@ export class CoachListItemComponent implements OnInit {
         console.log("Coach to be hired", coach);
 
         const userId = this.userService.getUserId();
+        const coachId = coach.id;
 
         this.userService.getUserById$(userId).subscribe({
             next: userResponse => {
                 console.log(userResponse);
 
-                if (userResponse.coach && Object.keys(userResponse.coach).length > 0) {
+                if (userResponse.coach) {
                     alert('You have already hired a coach. Please cancel him first.');
                     return;
                 }
 
-                this.userService.editCoachForGivenUser$(userId, coach).subscribe({
-                    next: editedUser => {
-                        console.log("Edited user", editedUser);
+                this.coachService.hireCoach$(userId, coachId).subscribe({
+                    next: response => {
+                        console.log("Hired coach? ", response);
 
-                        const coachId = coach.id;
-
-                        let coachClients = coach.clients;
-                        coachClients.push(userId);
-
-                        this.coachService.editUsersForGivenCoach(coachId, coachClients).subscribe({
-                            next: editedCoach => {
-                                console.log("Edited coach", editedCoach);
-                                this.canHire = false;
-                            },
-                            error: err => {
-                                console.log(err);
-                                alert("Something went wrong... Please re-login.");
-                            }
-                        });
+                        this.canHire = false;
                     },
                     error: err => {
                         console.log(err);
-                        alert("Something went wrong... Please re-login.");
+                        alert("Invalid reference!")
                     }
                 });
             },
             error: err => {
                 console.log(err);
-                alert("Something went wrong... Please re-login.");
+                alert("Invalid reference!")
             }
         });
 
@@ -79,24 +66,15 @@ export class CoachListItemComponent implements OnInit {
         const userId = this.userService.getUserId();
         const coachId = coach.id;
 
-        this.userService.editCoachForGivenUser$(userId).subscribe({
-            next: editedUser => {
-                console.log("Edited user", editedUser);
-            },
-            error: err => {
-                console.log(err);
-            }
-        });
+        this.coachService.cancelCoach$(userId, coachId).subscribe({
+            next: response => {
+                console.log("Cancelled coach? ", response);
 
-        const coachClients = coach.clients.filter(id => id != userId);
-
-        this.coachService.editUsersForGivenCoach(coachId, coachClients).subscribe({
-            next: editedCoach => {
-                console.log("Edited coach", editedCoach);
                 this.canHire = true;
             },
             error: err => {
                 console.log(err);
+                alert("Invalid reference!");
             }
         });
     }

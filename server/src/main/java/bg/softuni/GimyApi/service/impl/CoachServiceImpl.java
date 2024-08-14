@@ -6,6 +6,7 @@ import bg.softuni.GimyApi.model.view.CoachViewModel;
 import bg.softuni.GimyApi.model.view.WorkoutProgramViewModel;
 import bg.softuni.GimyApi.repository.CoachRepository;
 import bg.softuni.GimyApi.repository.CoachReviewRepository;
+import bg.softuni.GimyApi.repository.UserRepository;
 import bg.softuni.GimyApi.service.CoachService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -19,12 +20,14 @@ public class CoachServiceImpl implements CoachService {
 
     private final CoachRepository coachRepository;
     private final CoachReviewRepository coachReviewRepository;
+    private final UserRepository userRepository;
 
     private final ModelMapper modelMapper;
 
-    public CoachServiceImpl(CoachRepository coachRepository, CoachReviewRepository coachReviewRepository, ModelMapper modelMapper) {
+    public CoachServiceImpl(CoachRepository coachRepository, CoachReviewRepository coachReviewRepository, UserRepository userRepository, ModelMapper modelMapper) {
         this.coachRepository = coachRepository;
         this.coachReviewRepository = coachReviewRepository;
+        this.userRepository = userRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -109,5 +112,65 @@ public class CoachServiceImpl implements CoachService {
         viewModel.setReviews(reviews);
 
         return viewModel;
+    }
+
+    @Override
+    public boolean hireCoach(String userId, String coachId) {
+        Optional<UserEntity> optionalUser = userRepository.findById(userId);
+
+        if (optionalUser.isEmpty()) {
+            return false;
+        }
+
+        Optional<CoachEntity> optionalCoach = coachRepository.findById(coachId);
+
+        if (optionalCoach.isEmpty()) {
+            return false;
+        }
+
+        UserEntity userEntity = optionalUser.get();
+
+        // A coach is already hired
+        if (userEntity.getCoach() != null) {
+            return false;
+        }
+
+        CoachEntity coach = optionalCoach.get();
+
+        userEntity.setCoach(coach);
+
+        userRepository.saveAndFlush(userEntity);
+
+        return true;
+    }
+
+    @Override
+    public boolean cancelCoach(String userId, String coachId) {
+        Optional<UserEntity> optionalUser = userRepository.findById(userId);
+
+        if (optionalUser.isEmpty()) {
+            return false;
+        }
+
+        Optional<CoachEntity> optionalCoach = coachRepository.findById(coachId);
+
+        if (optionalCoach.isEmpty()) {
+            return false;
+        }
+
+        UserEntity userEntity = optionalUser.get();
+
+        // No coach is hired
+        if (userEntity.getCoach() == null) {
+            return false;
+        } else if (!userEntity.getCoach().getId().equals(coachId)) {
+            return false;
+        }
+
+        userEntity.setCoach(null);
+
+        userRepository.saveAndFlush(userEntity);
+
+        return true;
     }
 }

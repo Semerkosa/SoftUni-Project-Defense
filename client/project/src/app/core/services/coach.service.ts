@@ -22,11 +22,13 @@ export class CoachService {
     return this.http.get<ICoach>(`${serverUrl}/${id}`, this.userService.getUpdatedHttpOptions());
   }
 
-  editUsersForGivenCoach(coachId: string, userIds: string[]): Observable<ICoach> {
-    const body = {
-      "clients": userIds
-    }
+  hireCoach$(userId: string, coachId: string): Observable<any> {
+    const url = `${serverUrl}/hire?userId=${userId}&coachId=${coachId}`;
+		return this.http.post<any>(url, null, this.userService.getUpdatedHttpOptions());
+  }
 
-    return this.http.patch<ICoach>(`${serverUrl}/${coachId}`, body, this.userService.getUpdatedHttpOptions());
+  cancelCoach$(userId: string, coachId: string): Observable<any> {
+    const url = `${serverUrl}/cancel?userId=${userId}&coachId=${coachId}`;
+		return this.http.post<any>(url, null, this.userService.getUpdatedHttpOptions());
   }
 }

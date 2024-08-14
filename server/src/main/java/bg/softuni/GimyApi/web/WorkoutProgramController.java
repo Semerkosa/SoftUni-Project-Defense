@@ -60,9 +60,6 @@ public class WorkoutProgramController {
     @PostMapping("/purchase")
     public ResponseEntity<?> purchaseWorkoutProgram(@RequestParam("userId") String userId,
                                                     @RequestParam("workoutProgramId") String workoutProgramId) {
-        System.out.println("Param1: " + userId);
-        System.out.println("Param2: " + workoutProgramId);
-
         if (userId == null || userId.isEmpty() || workoutProgramId == null || workoutProgramId.isEmpty()) {
             return new ResponseEntity<>(new ErrorViewModel("Invalid reference!"), HttpStatus.BAD_REQUEST);
         }
