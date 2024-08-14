@@ -57,7 +57,6 @@ public class InitializeData implements CommandLineRunner {
 
         System.out.println("Adding reviews to the coach...");
 
-        // TODO: Check if all reviews are added correctly
         coachService.addReview(coachId, "My testosterone levels literally double just as I am speaking to him... Online!!!");
         coachService.addReview(coachId, "This man will make you go through HELL, but it is damn worth it!");
         coachService.addReview(coachId, "There is nothing to say really... You can't expect anything less than amazing results with such a man as your coach! What a proffessional!");

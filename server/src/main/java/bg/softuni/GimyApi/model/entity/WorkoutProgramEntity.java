@@ -78,6 +78,15 @@ public class WorkoutProgramEntity extends BaseEntity {
         this.workoutProgramReviews = workoutProgramReviews;
     }
 
+    @PreRemove
+    private void removeUserRelation() {
+        System.out.println("Removing relation: ");
+        for (UserEntity user : this.getUsers()) {
+            System.out.println("User " + user.getEmail());
+            user.getWorkoutPrograms().remove(this);
+        }
+    }
+
     public void addReview(WorkoutProgramReviewEntity review) {
         List<WorkoutProgramReviewEntity> reviews = getWorkoutProgramReviews() == null ? new ArrayList<>() : getWorkoutProgramReviews();
 
