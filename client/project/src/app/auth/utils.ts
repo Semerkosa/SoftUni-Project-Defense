@@ -8,7 +8,7 @@ export function emailValidator(control: AbstractControl): ValidationErrors | nul
         return null;
     }
 
-    if (!/.{5,}@(gmail|abv)\.(com|bg)/.test(value)) {
+    if (!/^[a-zA-Z0-9. _%+-]+\@[a-zA-Z0-9. -]+\.[a-zA-Z]{2,}$/.test(value)) {
         // pesho@abv.bg, ivan_ivanov@gmail.com
         return {
             email: true,
