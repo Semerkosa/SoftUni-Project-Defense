@@ -26,14 +26,16 @@ The UX is flawless. Clean and good-looking design. Added error handling - messag
 
 ## Instructions to run the project:
 
-### 1) Start the server (Spring)
+### 1) Start the server (Spring) - port 80, by default
 - Once you clone/download the project, open the `server` directory (server's root) with 'IntelliJ Idea'
 - Find the project's configuration file (`application.yaml`) inside `src/main/resources/` and set the three environment variables - `SPRING_DB_USER`, `SPRING_DB_PASS` and `SPRING_JWT_SECRET`, where the first two are the credentials to connect to a local 'MariaDB' server, while the last one can be any random sequence of **at least 64 characters** (256 bits)
 - From within 'IntelliJ Idea', find the `GimyApiApplication` java file inside `src/main/java/bg/softuni/GimyApi/`. Right click it and find the `Run` command.
 
-To start the project from a terminal using 'Gradle', open a terminal inside the `server` directory (root) and enter `/gradlew bootRun` for *Windows* and `./gralew bootRun` for *Linux* and *MacOS*. Remember to set the environment variables (explanation above).
+To start the project from a terminal using 'Gradle', open one inside the `server` directory (root) and enter `/gradlew bootRun` for *Windows* and `./gralew bootRun` for *Linux* and *MacOS*. **Remember** to set the environment variables (explanation above).
 
-### 2) Start the client app (Angular.js)
+### 2) Start the client app (Angular.js) - port 4200, by default
 - Open a terminal inside `client/project` directory (client's root)
 - Download all the vital modules and libraries with `npm i`
 - Start the 'Angular' app with `npm start`
+
+Once both servers are running, you can go to `http://localhost:4200/` in the browser (by default), create an account and enjoy the experience.
