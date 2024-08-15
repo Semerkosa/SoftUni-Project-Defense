@@ -12,6 +12,7 @@ import { WorkoutProgramService } from 'src/app/core/services/workout-program.ser
 })
 export class WorkoutProgramListItemComponent implements OnChanges {
 
+    isLoggedIn = false;
     isAdmin = false;
     canPurchase = true;
     errorMessage = "";
@@ -28,6 +29,7 @@ export class WorkoutProgramListItemComponent implements OnChanges {
         console.log("Program", this.program);
         
         this.isAdmin = this.userService.isAdmin();
+        this.isLoggedIn = this.userService.isLoggedIn();
 
         const userId = this.userService.getUserId();
 
@@ -36,8 +38,18 @@ export class WorkoutProgramListItemComponent implements OnChanges {
         }
     }
 
+    showDetails() {
+        if (!this.isLoggedIn) {
+            alert("To view more details, please login.")
+            this.router.navigate(['/login']);
+            return;
+        } 
+
+        this.router.navigate(['/workout-programs', this.program.id]);
+    }
+
     purchaseProgram(event: Event, program: IWorkoutProgram) {
-        if (!this.userService.isLoggedIn()) {
+        if (!this.isLoggedIn) {
             alert("To buy a program, please login.")
             this.router.navigate(['/login']);
             return;

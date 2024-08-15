@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IWorkoutProgram } from 'src/app/core/interfaces';
+import { UserService } from 'src/app/core/services/user.service';
 import { WorkoutProgramService } from 'src/app/core/services/workout-program.service';
 
 @Component({
@@ -13,11 +14,14 @@ export class WorkoutProgramReviewPageComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
   isLoaded = false;
+  isLoggedIn = false;
+  shouldShowReviewForm = false;
 
   workoutProgram: IWorkoutProgram;
 
   constructor(
     private workoutProgramService: WorkoutProgramService, 
+    private userService: UserService, 
     private activatedRoute: ActivatedRoute,
     private router: Router) { }
 
@@ -26,6 +30,8 @@ export class WorkoutProgramReviewPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.isLoggedIn = this.userService.isLoggedIn();
+
     this.activatedRoute.params.subscribe(params => {
       const programId = params["workoutProgramId"];
 
@@ -46,4 +52,15 @@ export class WorkoutProgramReviewPageComponent implements OnInit, OnDestroy {
     });
   }
 
+  toggleReviewForm() {
+    this.shouldShowReviewForm = !this.shouldShowReviewForm;
+  }
+
+  addReviewToList(review: string) {
+    console.log("Current reviews list: ", this.workoutProgram.reviews);
+    this.workoutProgram.reviews.push(review);
+    console.log("New reviews list: ", this.workoutProgram.reviews);
+    
+    this.toggleReviewForm();
+  }
 }

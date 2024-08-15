@@ -8,7 +8,7 @@ import { WorkoutProgramListItemComponent } from './workout-program-list-item/wor
 import { AddWorkoutProgramComponent } from './add-workout-program/add-workout-program.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditWorkoutProgramComponent } from './edit-workout-program/edit-workout-program.component';
-import { AddReviewComponent } from '../reviews/add-review/add-review.component';
+import { AddReviewComponent } from './add-review/add-review.component';
 
 
 

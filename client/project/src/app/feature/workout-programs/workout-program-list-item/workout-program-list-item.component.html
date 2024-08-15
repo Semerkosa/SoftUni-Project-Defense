@@ -1,6 +1,6 @@
 <h3>Program: {{ program.name }}</h3>
 <p>{{ program.description }}</p>
-<a [routerLink]="['/workout-programs', program.id]">Learn More</a>
+<a class="learn-more" (click)="showDetails()">Learn More</a>
 <div class="price-info">
     <p>Costs only <strong>{{ program.price }}$</strong></p>
     <button class="btn" [disabled]="!canPurchase" (click)="purchaseProgram($event, program)">

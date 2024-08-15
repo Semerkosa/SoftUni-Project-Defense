@@ -13,11 +13,12 @@ export class ReviewService {
 
   constructor(private http: HttpClient, private userService: UserService) { }
 
-  addReview$(review: String): Observable<any> {
+  addReviewForWorkoutProgram$(review: String, workoutProgramId: String): Observable<any> {
     const body = {
-      review
+      review,
+      workoutProgramId,
     };
 
-		return this.http.post<any>(`${serverUrl}/post`, null, this.userService.getUpdatedHttpOptions());
+		return this.http.post<any>(`${serverUrl}/post/workout-program`, body, this.userService.getUpdatedHttpOptions());
   }
 }

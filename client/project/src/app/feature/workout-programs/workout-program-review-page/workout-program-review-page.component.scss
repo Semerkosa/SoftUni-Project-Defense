@@ -1,5 +1,5 @@
 main {
-    padding-top: 3rem;
+  padding-top: 3rem;
 }
 
 .loader {
@@ -21,16 +21,16 @@ main {
 
     h3 {
       margin: 1.5rem 0rem 0rem;
+
+      &.review-heading {
+        margin-top: 3rem;
+      }
     }
 
-    .price-info {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-
-      .btn {
-        background-color: lightgreen;
-      }
+    .review-btn {
+      background-color: blue;
+      color: white;
+      width: 160px;
     }
   }
 }

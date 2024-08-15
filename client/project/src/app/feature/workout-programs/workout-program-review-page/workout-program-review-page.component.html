@@ -12,9 +12,10 @@
                 - "{{ review }}"
             </p>
             
-            <button *ngIf="isLoggedIn" class="btn create" (click)="toggleReviewForm()">Create</button>
+            <h3 class="review-heading">Want to share an opinion? Leave your review below!</h3>
+            <button *ngIf="isLoggedIn" class="btn review-btn" (click)="toggleReviewForm()">{{ shouldShowReviewForm ? "Hide Form" : "Expand Form" }}</button>
 
-            <app-add-review *ngIf="shouldShowReviewForm" (onReviewAdded)="addReviewToList($event, workoutProgram)"></app-add-review>
+            <app-add-review *ngIf="shouldShowReviewForm" [program]="workoutProgram" (onReviewPost)="addReviewToList($event)"></app-add-review>
         </div>
     </div>
 

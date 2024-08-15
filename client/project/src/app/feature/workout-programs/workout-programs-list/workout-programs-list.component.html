@@ -2,7 +2,7 @@
 
     <div *ngIf="workoutPrograms; else noPrograms" class="programs">
         <h1>Different lifestyle - different program!</h1>
-        <button *ngIf="isAdmin" class="btn create" (click)="toggleCreateForm()">Create</button>
+        <button *ngIf="isAdmin" class="btn create" (click)="toggleCreateForm()">{{ !shouldShowCreateForm ? "Create" : "Hide"}}</button>
 
         <app-add-workout-program *ngIf="shouldShowCreateForm" (onProgramCreate)="addWorkoutProgramToList($event)"></app-add-workout-program>
 
