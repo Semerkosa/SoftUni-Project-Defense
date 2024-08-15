@@ -1,5 +1,6 @@
 package bg.softuni.GimyApi.service;
 
+import bg.softuni.GimyApi.exceptions.InvalidUserException;
 import bg.softuni.GimyApi.model.entity.WorkoutProgramEntity;
 import bg.softuni.GimyApi.model.service.ReviewServiceModel;
 import bg.softuni.GimyApi.model.service.WorkoutProgramServiceModel;
@@ -25,5 +26,5 @@ public interface WorkoutProgramService {
 
     boolean purchaseWorkoutProgram(String userId, String workoutProgramId);
 
-    boolean postReview(ReviewServiceModel reviewServiceModel);
+    boolean postReview(ReviewServiceModel reviewServiceModel) throws InvalidUserException;
 }

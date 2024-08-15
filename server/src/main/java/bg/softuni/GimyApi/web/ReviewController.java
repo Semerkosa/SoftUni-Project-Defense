@@ -1,5 +1,6 @@
 package bg.softuni.GimyApi.web;
 
+import bg.softuni.GimyApi.exceptions.InvalidUserException;
 import bg.softuni.GimyApi.model.service.ReviewServiceModel;
 import bg.softuni.GimyApi.model.view.CustomMessageViewModel;
 import bg.softuni.GimyApi.service.WorkoutProgramService;
@@ -18,7 +19,7 @@ public class ReviewController {
     }
 
     @PostMapping("/post/workout-program")
-    public ResponseEntity<?> postWorkoutProgramReview(@RequestBody ReviewServiceModel reviewServiceModel) {
+    public ResponseEntity<?> postWorkoutProgramReview(@RequestBody ReviewServiceModel reviewServiceModel) throws InvalidUserException {
         System.out.println(reviewServiceModel);
         boolean success = workoutProgramService.postReview(reviewServiceModel);
 

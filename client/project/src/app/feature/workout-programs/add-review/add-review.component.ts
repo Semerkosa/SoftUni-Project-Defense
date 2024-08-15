@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IWorkoutProgram } from 'src/app/core/interfaces';
 import { ReviewService } from 'src/app/core/services/review.service';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-add-review',
@@ -15,7 +16,8 @@ export class AddReviewComponent implements OnInit {
   @Output() onReviewPost = new EventEmitter<string>();
 
   constructor(private formBuilder: FormBuilder,
-              private reviewService: ReviewService
+              private reviewService: ReviewService,
+              private userService: UserService
   ) { }
 
   ngOnInit(): void {
@@ -29,15 +31,21 @@ export class AddReviewComponent implements OnInit {
     console.log('Review form', this.addReviewFormGroup.value);
 
     const { review } = this.addReviewFormGroup.value;
+    const userId = this.userService.getUserId();
 
-    this.reviewService.addReviewForWorkoutProgram$(review, this.program.id).subscribe({
+    this.reviewService.addReviewForWorkoutProgram$(userId, review, this.program.id).subscribe({
       next: response => {
         console.log('Post review response: ', response);
         this.onReviewPost.emit(review);
       },
       error: (err) => {
         console.log(err);
-        this.errorMessage = "Couldn't save the review.";
+
+        if (err.status == 502) {
+          this.errorMessage = "You cannot post reviews for products you haven't purchased.";
+        } else {
+          this.errorMessage = "Couldn't save the review.";
+        }
       },
     });
   }

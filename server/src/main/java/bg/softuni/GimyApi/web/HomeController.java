@@ -8,6 +8,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String index() {
-        return "Welcome to Gimy - an application created to help anyone get in the best shape of their life!";
+        return "Welcome to Gimy - an application, created to help anyone get in the best shape of their life!";
     }
 }

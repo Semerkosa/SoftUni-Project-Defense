@@ -10,7 +10,7 @@
 
     <ng-container *ngIf="shouldShowErrorForControl('review')">
         <p *ngIf="addReviewFormGroup.controls['review'].errors?.['required']" class="error">
-            Min. 25 characters
+            Cannot post an empty review!
         </p>
     </ng-container>
 

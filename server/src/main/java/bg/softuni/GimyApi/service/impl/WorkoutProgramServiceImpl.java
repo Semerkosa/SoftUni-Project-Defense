@@ -1,5 +1,6 @@
 package bg.softuni.GimyApi.service.impl;
 
+import bg.softuni.GimyApi.exceptions.InvalidUserException;
 import bg.softuni.GimyApi.model.entity.UserEntity;
 import bg.softuni.GimyApi.model.entity.WorkoutProgramEntity;
 import bg.softuni.GimyApi.model.entity.WorkoutProgramReviewEntity;
@@ -200,23 +201,34 @@ public class WorkoutProgramServiceImpl implements WorkoutProgramService {
     }
 
     @Override
-    public boolean postReview(ReviewServiceModel reviewServiceModel) {
+    public boolean postReview(ReviewServiceModel reviewServiceModel) throws InvalidUserException {
+//        if (true) throw new InvalidUserException("The user must own the program to post reviews!");
+
+        String userId = reviewServiceModel.getUserId();
         String workoutProgramId = reviewServiceModel.getEntityId();
 
-        if (workoutProgramId == null || workoutProgramId.isEmpty()) {
-            System.out.println("Empty workout program id");
+        if (workoutProgramId == null || workoutProgramId.isEmpty() || userId == null || userId.isEmpty()) {
+            System.out.println("Empty workout program id or user id");
             return false;
         }
 
         Optional<WorkoutProgramEntity> optionalWorkoutProgram = workoutProgramRepository.findById(workoutProgramId);
+        Optional<UserEntity> optionalUser = userRepository.findById(userId);
 
-        if (optionalWorkoutProgram.isEmpty()) {
+        if (optionalWorkoutProgram.isEmpty() || optionalUser.isEmpty()) {
             System.out.println("No such workout program");
             return false;
         }
 
+        WorkoutProgramEntity workoutProgram = optionalWorkoutProgram.get();
+        UserEntity user = optionalUser.get();
+
+        if (!workoutProgram.getUsers().contains(user)) {
+            throw new InvalidUserException("The user must own the program to post reviews!");
+        }
+
         WorkoutProgramReviewEntity reviewEntity = new WorkoutProgramReviewEntity(reviewServiceModel.getReview());
-        reviewEntity.setWorkoutProgram(optionalWorkoutProgram.get());
+        reviewEntity.setWorkoutProgram(workoutProgram);
 
         workoutProgramReviewRepository.saveAndFlush(reviewEntity);
 
