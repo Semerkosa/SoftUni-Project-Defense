@@ -36,10 +36,10 @@ public class InitializeData implements CommandLineRunner {
         createRoles();
         createAdminUser();
         createWorkoutProgram();
-        createCoach();
+        createCoaches();
     }
 
-    private void createCoach() {
+    private void createCoaches() {
         System.out.println("Creating coach...");
 
         CoachServiceModel coachServiceModel = new CoachServiceModel(
@@ -63,6 +63,20 @@ public class InitializeData implements CommandLineRunner {
         coachService.addReview(coachId, "The Rock man... The one and only. Pure inspiration!");
 
         System.out.println("Reviews added!");
+
+        // Creating a second coach:
+        CoachServiceModel coachServiceModel2 = new CoachServiceModel(
+                "Matt",
+                "Damon",
+                520,
+                "Hello there! I am Matt and I am a professional certified coach. Thousands of clients trust me worldwide through online coaching. If you really want a change, join me and my team!"
+        );
+
+        String coachId2 = coachService.createCoach(coachServiceModel2).getId();
+
+        coachService.addReview(coachId2, "Matt is such a sweetie! His workouts are unique and fun. I no longer feel obliged to visit the gym, but I go there with enthusiasm now!");
+        coachService.addReview(coachId2, "This man helped me get rid of my stubborn belly fat in literally a few weeks with few simple diet tweaks!");
+        coachService.addReview(coachId2, "Props to him and his team for the 24/7 online support and guidance, quick replies and even video chats!");
     }
 
     private void createWorkoutProgram() {

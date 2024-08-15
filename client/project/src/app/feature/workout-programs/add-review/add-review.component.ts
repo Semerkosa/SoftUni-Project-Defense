@@ -31,6 +31,12 @@ export class AddReviewComponent implements OnInit {
     console.log('Review form', this.addReviewFormGroup.value);
 
     const { review } = this.addReviewFormGroup.value;
+
+    if (review?.trim().length === 0) {
+      this.errorMessage = "You cannot post an empty review!";
+      return;
+    }
+
     const userId = this.userService.getUserId();
 
     this.reviewService.addReviewForWorkoutProgram$(userId, review, this.program.id).subscribe({
@@ -42,10 +48,16 @@ export class AddReviewComponent implements OnInit {
         console.log(err);
 
         if (err.status == 502) {
-          this.errorMessage = "You cannot post reviews for products you haven't purchased.";
+          this.errorMessage = "You need to buy the product first.";
         } else {
           this.errorMessage = "Couldn't save the review.";
         }
+
+        this.addReviewFormGroup.setValue({
+          review: '',
+        });
+
+        this.addReviewFormGroup.markAsUntouched();
       },
     });
   }

@@ -52,7 +52,7 @@ export class EditWorkoutProgramComponent implements OnInit {
     }
 
     saveChanges() {
-        if (this.name.length === 0 || this.description.length === 0 || this.details.length === 0) {
+        if (this.name?.trim().length === 0 || this.description?.trim().length === 0 || this.details?.trim().length === 0) {
             this.errorMessage = "Fill in all the fields!";
             return;
         } else if (this.price < 1) {

@@ -37,6 +37,11 @@ export class AddWorkoutProgramComponent implements OnInit {
 
     const { name, price, description, details } =
       this.createProgramFormGroup.value;
+    
+    if (name?.trim().length === 0 || description?.trim().length === 0 || details?.trim().length === 0) {
+      this.errorMessage = "Fill in all the fields!";
+      return;
+    }
 
     const program: ICreateProgram = {
       name: name,
