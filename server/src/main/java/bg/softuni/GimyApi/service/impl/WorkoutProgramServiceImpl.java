@@ -3,6 +3,7 @@ package bg.softuni.GimyApi.service.impl;
 import bg.softuni.GimyApi.model.entity.UserEntity;
 import bg.softuni.GimyApi.model.entity.WorkoutProgramEntity;
 import bg.softuni.GimyApi.model.entity.WorkoutProgramReviewEntity;
+import bg.softuni.GimyApi.model.service.ReviewServiceModel;
 import bg.softuni.GimyApi.model.service.WorkoutProgramServiceModel;
 import bg.softuni.GimyApi.model.view.WorkoutProgramViewModel;
 import bg.softuni.GimyApi.repository.UserRepository;
@@ -194,6 +195,30 @@ public class WorkoutProgramServiceImpl implements WorkoutProgramService {
         userEntity.addWorkoutProgram(workoutProgram);
 
         userRepository.saveAndFlush(userEntity);
+
+        return true;
+    }
+
+    @Override
+    public boolean postReview(ReviewServiceModel reviewServiceModel) {
+        String workoutProgramId = reviewServiceModel.getEntityId();
+
+        if (workoutProgramId == null || workoutProgramId.isEmpty()) {
+            System.out.println("Empty workout program id");
+            return false;
+        }
+
+        Optional<WorkoutProgramEntity> optionalWorkoutProgram = workoutProgramRepository.findById(workoutProgramId);
+
+        if (optionalWorkoutProgram.isEmpty()) {
+            System.out.println("No such workout program");
+            return false;
+        }
+
+        WorkoutProgramReviewEntity reviewEntity = new WorkoutProgramReviewEntity(reviewServiceModel.getReview());
+        reviewEntity.setWorkoutProgram(optionalWorkoutProgram.get());
+
+        workoutProgramReviewRepository.saveAndFlush(reviewEntity);
 
         return true;
     }

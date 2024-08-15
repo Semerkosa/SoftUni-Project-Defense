@@ -1,13 +1,11 @@
 package bg.softuni.GimyApi.web;
 
+import bg.softuni.GimyApi.model.service.ReviewServiceModel;
 import bg.softuni.GimyApi.model.view.CustomMessageViewModel;
 import bg.softuni.GimyApi.service.WorkoutProgramService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/reviews")
@@ -20,8 +18,14 @@ public class ReviewController {
     }
 
     @PostMapping("/post/workout-program")
-    public ResponseEntity<?> postWorkoutProgramReview(@RequestBody String review) {
-//        return ResponseEntity.ok(new CustomMessageViewModel("test"));
-        return new ResponseEntity<>("kur", HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> postWorkoutProgramReview(@RequestBody ReviewServiceModel reviewServiceModel) {
+        System.out.println(reviewServiceModel);
+        boolean success = workoutProgramService.postReview(reviewServiceModel);
+
+        if (!success) {
+            return new ResponseEntity<>("Invalid reference!", HttpStatus.NOT_FOUND);
+        }
+
+        return ResponseEntity.ok(new CustomMessageViewModel("Review successfully saved."));
     }
 }

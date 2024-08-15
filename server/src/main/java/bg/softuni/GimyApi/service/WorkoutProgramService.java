@@ -1,6 +1,7 @@
 package bg.softuni.GimyApi.service;
 
 import bg.softuni.GimyApi.model.entity.WorkoutProgramEntity;
+import bg.softuni.GimyApi.model.service.ReviewServiceModel;
 import bg.softuni.GimyApi.model.service.WorkoutProgramServiceModel;
 import bg.softuni.GimyApi.model.view.WorkoutProgramViewModel;
 
@@ -23,4 +24,6 @@ public interface WorkoutProgramService {
     WorkoutProgramViewModel editProgramById(String workoutProgramId, WorkoutProgramServiceModel workoutProgramServiceModel);
 
     boolean purchaseWorkoutProgram(String userId, String workoutProgramId);
+
+    boolean postReview(ReviewServiceModel reviewServiceModel);
 }

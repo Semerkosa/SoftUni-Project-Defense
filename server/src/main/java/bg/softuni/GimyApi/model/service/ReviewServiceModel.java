@@ -3,9 +3,9 @@ package bg.softuni.GimyApi.model.service;
 public class ReviewServiceModel {
 
     private String review;
+    private String entityId;
 
-    public ReviewServiceModel(String review) {
-        this.review = review;
+    public ReviewServiceModel() {
     }
 
     public String getReview() {
@@ -14,5 +14,22 @@ public class ReviewServiceModel {
 
     public void setReview(String review) {
         this.review = review;
+    }
+
+    public String getEntityId() {
+        return entityId;
+    }
+
+    public ReviewServiceModel setEntityId(String entityId) {
+        this.entityId = entityId;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "ReviewServiceModel{" +
+                "review='" + review + '\'' +
+                ", entityId='" + entityId + '\'' +
+                '}';
     }
 }
