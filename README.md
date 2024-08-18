@@ -39,3 +39,7 @@ To start the project from a terminal using 'Gradle', open one inside the `server
 - Start the 'Angular' app with `npm start`
 
 Once both servers are running, you can go to `http://localhost:4200/` in the browser (by default), create an account and enjoy the experience.
+There is initial data loaded - two roles (authorities) - USER & ADMIN, an admin user, two coaches and a workout program (the admin can add more).
+The credentials for the admin user are:
+- email: `admin@abv.bg`
+- pass: `Admin123`
